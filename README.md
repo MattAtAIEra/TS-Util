@@ -1,56 +1,107 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="TS-Util — Type-safe form validation, AJAX, messaging, and view management" width="100%" />
+  <img src="https://raw.githubusercontent.com/MattAtAIEra/TS-Util/main/docs/banner.svg" alt="TS-Util — Agent Discipline for Humans and AI" width="100%" />
 </p>
 
 <p align="center">
-  <strong>The form infrastructure toolkit for enterprise web apps.</strong><br/>
-  Drop jQuery. Keep the patterns. Ship with confidence.
+  <strong>One pipeline. Same guardrails. Whether it's your team or your AI Agents writing the code.</strong>
 </p>
 
 <p align="center">
+  <a href="#1-why-agent-discipline">Why</a>&ensp;&bull;&ensp;
+  <a href="#2-how-it-works">How</a>&ensp;&bull;&ensp;
+  <a href="#3-advantages">Advantages</a>&ensp;&bull;&ensp;
   <a href="#quick-start">Quick Start</a>&ensp;&bull;&ensp;
   <a href="#live-demo">Live Demo</a>&ensp;&bull;&ensp;
   <a href="#modules">Modules</a>&ensp;&bull;&ensp;
-  <a href="#api-reference">API Reference</a>&ensp;&bull;&ensp;
-  <a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-after.md">Design Patterns</a>
+  <a href="#api-reference">API</a>
 </p>
 
 ---
 
-## Why TS-Util?
+## 1. Why Agent Discipline?
 
-| Pain point | How this library solves it |
+You don't have a code quality problem. You have a **consistency problem.**
+
+Ten engineers write ten different AJAX calls. Ten AI Agents generate ten different fetch patterns. Some validate forms, some don't. Some show loading overlays, some forget. Some handle errors gracefully, some swallow them silently.
+
+Code review catches some of it. **Architecture catches all of it.**
+
+| The real problem | What actually happens |
 |---|---|
-| **"Our forms need validation, masking, AJAX, dialogs — that's 4 libraries."** | One import. Six modules. Zero dependencies. |
-| **"Dynamic content loaded via AJAX has no validation."** | `VIEW.load()` auto-initializes constraints and formatters on every fragment. |
-| **"Adding a custom input format means touching library internals."** | `Formatter.add({ key, format })` — register from the outside, never fork. |
-| **"Runtime surprises: wrong callback shape, misspelled event name."** | Every event, callback, and option is type-checked at compile time. |
+| "Every developer does AJAX differently." | Validation gets skipped. Loading spinners are inconsistent. Error handling is a coin flip. |
+| "AI Agents generate verbose, repetitive code." | Each Agent expands `fetch` + validation + error handling + loading from scratch, burning context tokens on boilerplate. |
+| "New team members break conventions." | They didn't know there *was* a convention — it was tribal knowledge, not enforced infrastructure. |
+| "We can't tell if the Agent forgot something." | You'd have to audit every generated function. At scale, that's impossible. |
 
-### The deeper reason: discipline at scale
-
-Every frontend project eventually hits the same problem: ten engineers (or ten AI Agents) write ten different ways to make an AJAX call. Should you validate the form before sending? Show a loading overlay? How should errors be handled? Everyone has a different answer, and code review can only do so much.
-
-**TS-Util encodes decisions into infrastructure.** When you call `AJAX.request()`, form validation, loading state management, error broadcasting, and data serialization all happen automatically. You can't skip any of them — and neither can your teammates or your AI coding assistants.
-
-**For teams** — engineers learn one API, new members read one example to get started, and every request flows through the same pipeline. No debates, no divergence.
-
-**For AI Agents** — an Agent emits `AJAX.request({ url, form })` instead of expanding the full fetch + validation + error handling logic every time. Context window is AI's most precious resource; saving tokens preserves quality. The abstraction layer also acts as a guardrail — an Agent cannot "forget" to validate a form because the architecture enforces it automatically.
-
-> **Wrapping isn't about writing less code — it's about making ten people, or ten Agents, produce output that looks like it came from one.**
-
-📖 Read the full article in [six languages](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/why-wrap-ajax-and-view.md) (繁體中文 · English · 日本語 · 한국어 · Español · Deutsch)
+**The solution is not more code review. The solution is making wrong code impossible to write.**
 
 ---
 
-## Live Demo
+## 2. How It Works
 
-> **[Open `demo.html`](demo.html)** — an interactive single-page guide with live output consoles for every module.
+TS-Util wraps AJAX, VIEW, validation, formatting, and messaging into **a single enforced pipeline**. When anyone — human or AI — calls `AJAX.request()`, the following happens automatically:
+
+```
+   AJAX.request({ url, form })
+          │
+          ▼
+   ┌─ 1. Validate form ──────── can't skip
+   ├─ 2. Emit ajax:before ───── loading overlay
+   ├─ 3. Serialize + POST ───── consistent format
+   ├─ 4. Emit ajax:after ────── overlay hides
+   └─ 5. Error broadcasting ─── centralized handling
+```
+
+```typescript
+// This is ALL the code an engineer or AI Agent needs to write:
+await AJAX.request({
+  url: '/api/orders',
+  form: document.getElementById('order-form')!,
+  success: () => MSG.info('Saved!', { autoclose: 3000 }),
+});
+
+// Everything else — validation, loading state, error events,
+// data serialization — is handled by the pipeline.
+```
+
+The same principle applies to `VIEW.load()` — every dynamically loaded HTML fragment automatically goes through constraint binding, input formatting, and custom hook execution. No manual initialization. No "forgetting" to set up validation on new content.
+
+```typescript
+// Load HTML fragment — validation + formatting auto-initialize
+await VIEW.load(container, { url: '/api/partial-view' });
+```
+
+---
+
+## 3. Advantages
+
+### For Engineering Teams
+
+| Before | After |
+|--------|-------|
+| 10 engineers, 10 AJAX patterns | 1 API: `AJAX.request()` |
+| New hire reads 10 scattered patterns | New hire reads 1 example, ships on day one |
+| "Did you add the loading overlay?" | Loading overlay is automatic — can't forget |
+| "Did you validate the form?" | Validation is automatic — can't skip |
+| Code review debates on style | Architecture enforces the style |
+
+### For AI Agents
+
+| Before | After |
+|--------|-------|
+| Agent expands 15 lines of fetch + validation + error handling | Agent emits 1 line: `AJAX.request({ url, form })` |
+| Context window burned on boilerplate | Tokens preserved for business logic |
+| Different Agents produce different patterns | All Agents produce identical pipeline calls |
+| Must audit every Agent's output for missing steps | Pipeline guarantees completeness — **guardrail by design** |
+| Agent "forgets" loading overlay | Impossible — architecture enforces it |
+
+### The Core Insight
+
+> **Discipline is not "remembering to do the right thing." Discipline is making the right thing the only thing that can happen.**
 >
-> ```bash
-> npx serve .        # then open http://localhost:3000/demo.html
-> ```
+> That's what TS-Util does — for your team today, and for the AI Agents that will write most of your code tomorrow.
 
-The demo lets you click through Events, AJAX, Validation, Formatting, MSG dialogs, VIEW injection, and utility functions — with code snippets alongside real-time results.
+📖 Read the full article in [six languages](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/why-wrap-ajax-and-view.md) (繁體中文 · English · 日本語 · 한국어 · Español · Deutsch)
 
 ---
 
@@ -77,7 +128,7 @@ import { AJAX, VIEW, MSG, Validation, Formatter, Events } from 'ts-util-core';
 </script>
 ```
 
-### A real-world example in 12 lines
+### A real-world example
 
 ```typescript
 import { AJAX, MSG, Events } from 'ts-util-core';
@@ -100,6 +151,18 @@ That single `AJAX.request()` call will:
 3. Serialize the form to JSON and POST it
 4. Emit `ajax:after` (spinner hides)
 5. Call your `success` callback
+
+---
+
+## Live Demo
+
+> **[Open `demo.html`](demo.html)** — an interactive single-page guide with live output consoles for every module.
+>
+> ```bash
+> npx serve .        # then open http://localhost:3000/demo.html
+> ```
+
+The demo lets you click through Events, AJAX, Validation, Formatting, MSG dialogs, VIEW injection, and utility functions — with code snippets alongside real-time results.
 
 ---
 
@@ -323,7 +386,7 @@ isDateValid('not-a-date');  // → false
 | `MSG` | `Message` | DOM dialog system |
 | `Validation` | `Validator` | Form validation engine |
 | `Formatter` | `FormatterRegistry` | Input mask registry |
-| `Events` | `EventEmitter<TSUtilEventMap>` | Typed event bus |
+| `Events` | `EventEmitter<AppEventMap>` | Typed event bus |
 
 ### Utility functions
 

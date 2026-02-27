@@ -5,15 +5,15 @@
       <stop offset="100%" stop-color="#1e3a5f"/>
     </linearGradient>
     <linearGradient id="accent" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="100%" stop-color="#818cf8"/>
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#ef4444"/>
     </linearGradient>
     <linearGradient id="glow" x1="480" y1="0" x2="480" y2="320" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.08"/>
-      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#f97316" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
     </linearGradient>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#38bdf8" flood-opacity="0.3"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="6" flood-color="#f97316" flood-opacity="0.35"/>
     </filter>
     <filter id="softshadow" x="-10%" y="-10%" width="120%" height="120%">
       <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.4"/>
@@ -27,74 +27,61 @@
   <!-- Decorative grid dots -->
   <g opacity="0.06" fill="#94a3b8">
     <circle cx="40" cy="40" r="1.5"/><circle cx="80" cy="40" r="1.5"/><circle cx="120" cy="40" r="1.5"/><circle cx="160" cy="40" r="1.5"/><circle cx="200" cy="40" r="1.5"/><circle cx="240" cy="40" r="1.5"/><circle cx="280" cy="40" r="1.5"/><circle cx="320" cy="40" r="1.5"/><circle cx="360" cy="40" r="1.5"/><circle cx="400" cy="40" r="1.5"/><circle cx="440" cy="40" r="1.5"/><circle cx="480" cy="40" r="1.5"/><circle cx="520" cy="40" r="1.5"/><circle cx="560" cy="40" r="1.5"/><circle cx="600" cy="40" r="1.5"/><circle cx="640" cy="40" r="1.5"/><circle cx="680" cy="40" r="1.5"/><circle cx="720" cy="40" r="1.5"/><circle cx="760" cy="40" r="1.5"/><circle cx="800" cy="40" r="1.5"/><circle cx="840" cy="40" r="1.5"/><circle cx="880" cy="40" r="1.5"/><circle cx="920" cy="40" r="1.5"/>
-    <circle cx="40" cy="80" r="1.5"/><circle cx="80" cy="80" r="1.5"/><circle cx="120" cy="80" r="1.5"/><circle cx="160" cy="80" r="1.5"/><circle cx="200" cy="80" r="1.5"/><circle cx="240" cy="80" r="1.5"/><circle cx="280" cy="80" r="1.5"/><circle cx="320" cy="80" r="1.5"/><circle cx="360" cy="80" r="1.5"/><circle cx="400" cy="80" r="1.5"/><circle cx="440" cy="80" r="1.5"/><circle cx="480" cy="80" r="1.5"/><circle cx="520" cy="80" r="1.5"/><circle cx="560" cy="80" r="1.5"/><circle cx="600" cy="80" r="1.5"/><circle cx="640" cy="80" r="1.5"/><circle cx="680" cy="80" r="1.5"/><circle cx="720" cy="80" r="1.5"/><circle cx="760" cy="80" r="1.5"/><circle cx="800" cy="80" r="1.5"/><circle cx="840" cy="80" r="1.5"/><circle cx="880" cy="80" r="1.5"/><circle cx="920" cy="80" r="1.5"/>
-    <circle cx="40" cy="120" r="1.5"/><circle cx="80" cy="120" r="1.5"/><circle cx="120" cy="120" r="1.5"/><circle cx="160" cy="120" r="1.5"/><circle cx="200" cy="120" r="1.5"/><circle cx="240" cy="120" r="1.5"/><circle cx="280" cy="120" r="1.5"/><circle cx="320" cy="120" r="1.5"/><circle cx="360" cy="120" r="1.5"/><circle cx="400" cy="120" r="1.5"/><circle cx="440" cy="120" r="1.5"/><circle cx="480" cy="120" r="1.5"/><circle cx="520" cy="120" r="1.5"/><circle cx="560" cy="120" r="1.5"/><circle cx="600" cy="120" r="1.5"/><circle cx="640" cy="120" r="1.5"/><circle cx="680" cy="120" r="1.5"/><circle cx="720" cy="120" r="1.5"/><circle cx="760" cy="120" r="1.5"/><circle cx="800" cy="120" r="1.5"/><circle cx="840" cy="120" r="1.5"/><circle cx="880" cy="120" r="1.5"/><circle cx="920" cy="120" r="1.5"/>
-    <circle cx="40" cy="240" r="1.5"/><circle cx="80" cy="240" r="1.5"/><circle cx="120" cy="240" r="1.5"/><circle cx="160" cy="240" r="1.5"/><circle cx="200" cy="240" r="1.5"/><circle cx="240" cy="240" r="1.5"/><circle cx="280" cy="240" r="1.5"/><circle cx="320" cy="240" r="1.5"/><circle cx="360" cy="240" r="1.5"/><circle cx="400" cy="240" r="1.5"/><circle cx="440" cy="240" r="1.5"/><circle cx="480" cy="240" r="1.5"/><circle cx="520" cy="240" r="1.5"/><circle cx="560" cy="240" r="1.5"/><circle cx="600" cy="240" r="1.5"/><circle cx="640" cy="240" r="1.5"/><circle cx="680" cy="240" r="1.5"/><circle cx="720" cy="240" r="1.5"/><circle cx="760" cy="240" r="1.5"/><circle cx="800" cy="240" r="1.5"/><circle cx="840" cy="240" r="1.5"/><circle cx="880" cy="240" r="1.5"/><circle cx="920" cy="240" r="1.5"/>
     <circle cx="40" cy="280" r="1.5"/><circle cx="80" cy="280" r="1.5"/><circle cx="120" cy="280" r="1.5"/><circle cx="160" cy="280" r="1.5"/><circle cx="200" cy="280" r="1.5"/><circle cx="240" cy="280" r="1.5"/><circle cx="280" cy="280" r="1.5"/><circle cx="320" cy="280" r="1.5"/><circle cx="360" cy="280" r="1.5"/><circle cx="400" cy="280" r="1.5"/><circle cx="440" cy="280" r="1.5"/><circle cx="480" cy="280" r="1.5"/><circle cx="520" cy="280" r="1.5"/><circle cx="560" cy="280" r="1.5"/><circle cx="600" cy="280" r="1.5"/><circle cx="640" cy="280" r="1.5"/><circle cx="680" cy="280" r="1.5"/><circle cx="720" cy="280" r="1.5"/><circle cx="760" cy="280" r="1.5"/><circle cx="800" cy="280" r="1.5"/><circle cx="840" cy="280" r="1.5"/><circle cx="880" cy="280" r="1.5"/><circle cx="920" cy="280" r="1.5"/>
   </g>
 
-  <!-- Left: Architecture diagram -->
-  <g transform="translate(56, 88)" filter="url(#softshadow)">
-    <!-- Central hub -->
-    <rect x="0" y="50" width="120" height="36" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
-    <text x="60" y="73" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#38bdf8">EventEmitter</text>
+  <!-- Left: Discipline diagram -->
+  <g transform="translate(56, 72)" filter="url(#softshadow)">
+    <!-- Pipeline box -->
+    <rect x="0" y="0" width="240" height="176" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="120" y="24" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#f97316">UNIFIED PIPELINE</text>
 
-    <!-- Module boxes -->
-    <rect x="150" y="0" width="80" height="28" rx="4" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
-    <text x="190" y="19" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">AJAX</text>
+    <!-- Steps -->
+    <rect x="16" y="40" width="208" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="120" y="56" text-anchor="middle" font-family="monospace" font-size="10" fill="#86efac">1. Validate form</text>
 
-    <rect x="150" y="40" width="80" height="28" rx="4" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
-    <text x="190" y="59" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">Validation</text>
+    <rect x="16" y="72" width="208" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="120" y="88" text-anchor="middle" font-family="monospace" font-size="10" fill="#86efac">2. Emit ajax:before</text>
 
-    <rect x="150" y="80" width="80" height="28" rx="4" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
-    <text x="190" y="99" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">Formatter</text>
+    <rect x="16" y="104" width="208" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="120" y="120" text-anchor="middle" font-family="monospace" font-size="10" fill="#86efac">3. Serialize + POST</text>
 
-    <rect x="150" y="120" width="80" height="28" rx="4" fill="#1e293b" stroke="#818cf8" stroke-width="1"/>
-    <text x="190" y="139" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">VIEW</text>
-
-    <!-- Connecting lines -->
-    <line x1="120" y1="60" x2="150" y2="14" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
-    <line x1="120" y1="65" x2="150" y2="54" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
-    <line x1="120" y1="72" x2="150" y2="94" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
-    <line x1="120" y1="78" x2="150" y2="134" stroke="#475569" stroke-width="1" stroke-dasharray="3,3"/>
-
-    <!-- Utils and MSG, smaller -->
-    <rect x="0" y="120" width="56" height="24" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-    <text x="28" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">MSG</text>
-
-    <rect x="64" y="120" width="56" height="24" rx="4" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-    <text x="92" y="136" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">Utils</text>
+    <rect x="16" y="136" width="208" height="24" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+    <text x="120" y="152" text-anchor="middle" font-family="monospace" font-size="10" fill="#86efac">4. Emit ajax:after</text>
   </g>
 
   <!-- Center-right: Title block -->
-  <g transform="translate(370, 60)">
-    <!-- Package tag -->
-    <rect x="0" y="0" width="100" height="24" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="1"/>
-    <text x="50" y="16" text-anchor="middle" font-family="monospace" font-size="11" fill="#38bdf8">@ts-util</text>
+  <g transform="translate(370, 48)">
+    <!-- Tag -->
+    <rect x="0" y="0" width="158" height="26" rx="13" fill="#1e293b" stroke="#f97316" stroke-width="1.5"/>
+    <text x="79" y="17" text-anchor="middle" font-family="monospace" font-size="11" font-weight="700" fill="#f97316">AGENT DISCIPLINE</text>
 
     <!-- Main title -->
-    <text x="0" y="64" font-family="system-ui, -apple-system, sans-serif" font-size="42" font-weight="800" fill="#f8fafc" filter="url(#shadow)">TS-Util</text>
+    <text x="0" y="72" font-family="system-ui, -apple-system, sans-serif" font-size="44" font-weight="800" fill="#f8fafc" filter="url(#shadow)">TS-Util</text>
 
     <!-- Subtitle -->
-    <text x="0" y="96" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#94a3b8">Type-safe form validation, AJAX, messaging,</text>
-    <text x="0" y="118" font-family="system-ui, -apple-system, sans-serif" font-size="16" fill="#94a3b8">and view management. Zero dependencies.</text>
+    <text x="0" y="106" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#94a3b8">One pipeline for humans and AI Agents.</text>
+    <text x="0" y="128" font-family="system-ui, -apple-system, sans-serif" font-size="15" fill="#94a3b8">Same code. Same guardrails. Zero drift.</text>
+
+    <!-- Quote -->
+    <text x="0" y="164" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-style="italic" fill="#64748b">"Ten engineers or ten Agents — output looks like one."</text>
 
     <!-- Stats badges -->
-    <g transform="translate(0, 142)">
+    <g transform="translate(0, 182)">
       <rect x="0" y="0" width="88" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
       <text x="44" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#86efac">TypeScript</text>
 
-      <rect x="96" y="0" width="80" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-      <text x="136" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#fbbf24">ES2022</text>
+      <rect x="96" y="0" width="68" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="130" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#fbbf24">0 deps</text>
 
-      <rect x="184" y="0" width="86" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-      <text x="227" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#f9a8d4">0 deps</text>
+      <rect x="172" y="0" width="100" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="222" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#93c5fd">~1.6k lines</text>
 
-      <rect x="278" y="0" width="100" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
-      <text x="328" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#93c5fd">~1.6k lines</text>
+      <rect x="280" y="0" width="118" height="22" rx="4" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+      <text x="339" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#f9a8d4">npm ts-util-core</text>
     </g>
   </g>
 
   <!-- Bottom accent line -->
-  <rect x="0" y="312" width="960" height="8" rx="0" fill="url(#accent)" opacity="0.6"/>
+  <rect x="0" y="312" width="960" height="8" rx="0" fill="url(#accent)" opacity="0.7"/>
 </svg>
