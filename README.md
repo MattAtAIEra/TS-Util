@@ -7,6 +7,10 @@
 </p>
 
 <p align="center">
+  📖 <a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_zh.md">繁體中文</a>&ensp;·&ensp;<a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_jp.md">日本語</a>&ensp;·&ensp;<a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_ko.md">한국어</a>&ensp;·&ensp;<a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_es.md">Español</a>&ensp;·&ensp;<a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_de.md">Deutsch</a>
+</p>
+
+<p align="center">
   <a href="#1-why-agent-discipline">Why</a>&ensp;&bull;&ensp;
   <a href="#2-how-it-works">How</a>&ensp;&bull;&ensp;
   <a href="#3-advantages">Advantages</a>&ensp;&bull;&ensp;
@@ -110,8 +114,6 @@ When multiple AI Agents co-produce code, this abstraction layer becomes even mor
 > **Discipline is not "remembering to do the right thing." Discipline is making the right thing the only thing that can happen.**
 >
 > That's what TS-Util does — for your team today, and for the AI Agents that will write most of your code tomorrow.
-
-📖 Read this in other languages: [繁體中文](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_zh.md) · [日本語](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_jp.md) · [한국어](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_ko.md) · [Español](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_es.md) · [Deutsch](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_de.md)
 
 ---
 
