@@ -83,10 +83,10 @@ export const Events = emitter;
 **Consumer usage:**
 ```typescript
 // Destructured import — only what you need
-import { AJAX, MSG } from '@ts-util/core';
+import { AJAX, MSG } from 'ts-util-core';
 
 // Or as a namespace
-import * as RS from '@ts-util/core';
+import * as RS from 'ts-util-core';
 RS.AJAX.request({ url: '/api' });
 ```
 

@@ -1,15 +1,15 @@
 // ---------------------------------------------------------------------------
-// @ts-util/core — barrel export
+// ts-util-core — barrel export
 //
 // This is the main entry point. It wires all modules together and exposes
 // the unified `#` (TS-Util) namespace.
 //
 // Usage with ES modules (recommended):
 //
-//   import { AJAX, VIEW, MSG, Validation, Formatter } from '@ts-util/core';
+//   import { AJAX, VIEW, MSG, Validation, Formatter } from 'ts-util-core';
 //
 //   // or as a single namespace:
-//   import * as RS from '@ts-util/core';
+//   import * as RS from 'ts-util-core';
 //   RS.AJAX.request({ url: '/api/save', form: myForm });
 //
 // Usage as a global (for non-module scripts):

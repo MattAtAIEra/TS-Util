@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Shared type definitions for @ts-util/core
+// Shared type definitions for ts-util-core
 // ---------------------------------------------------------------------------
 
 /** Supported constraint types declared via the `constraint` HTML attribute. */

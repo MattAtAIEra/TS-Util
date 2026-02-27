@@ -280,7 +280,7 @@
           <div class="card-header">Code</div>
           <div class="card-body">
 <pre><span class="comment">// Subscribe to lifecycle events</span>
-<span class="keyword">import</span> { Events } <span class="keyword">from</span> <span class="string">'@ts-util/core'</span>;
+<span class="keyword">import</span> { Events } <span class="keyword">from</span> <span class="string">'ts-util-core'</span>;
 
 Events.<span class="fn">on</span>(<span class="string">'ajax:before'</span>, ({ url }) => {
   console.log(<span class="string">`Loading ${url}...`</span>);
@@ -647,7 +647,7 @@ VIEW.<span class="fn">invokeBeforeLoad</span>(targetElement);</pre>
         <div class="card">
           <div class="card-header">formToJSON + isDateValid</div>
           <div class="card-body">
-<pre><span class="keyword">import</span> { formToJSON, isDateValid } <span class="keyword">from</span> <span class="string">'@ts-util/core'</span>;
+<pre><span class="keyword">import</span> { formToJSON, isDateValid } <span class="keyword">from</span> <span class="string">'ts-util-core'</span>;
 
 <span class="keyword">const</span> data = <span class="fn">formToJSON</span>(formElement);
 <span class="comment">// → { username: "alice", role: "viewer" }</span>

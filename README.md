@@ -22,7 +22,6 @@
 | Pain point | How this library solves it |
 |---|---|
 | **"Our forms need validation, masking, AJAX, dialogs — that's 4 libraries."** | One import. Six modules. Zero dependencies. |
-| **"jQuery is a liability but we rely on `$RS` everywhere."** | Drop-in replacement — same patterns, now with full TypeScript safety. |
 | **"Dynamic content loaded via AJAX has no validation."** | `VIEW.load()` auto-initializes constraints and formatters on every fragment. |
 | **"Adding a custom input format means touching library internals."** | `Formatter.add({ key, format })` — register from the outside, never fork. |
 | **"Runtime surprises: wrong callback shape, misspelled event name."** | Every event, callback, and option is type-checked at compile time. |
@@ -60,13 +59,13 @@ The demo lets you click through Events, AJAX, Validation, Formatting, MSG dialog
 ### Install
 
 ```bash
-npm install @ts-util/core
+npm install ts-util-core
 ```
 
 ### Import what you need
 
 ```typescript
-import { AJAX, VIEW, MSG, Validation, Formatter, Events } from '@ts-util/core';
+import { AJAX, VIEW, MSG, Validation, Formatter, Events } from 'ts-util-core';
 ```
 
 ### Or use the global namespace (legacy `<script>` tags)
@@ -81,7 +80,7 @@ import { AJAX, VIEW, MSG, Validation, Formatter, Events } from '@ts-util/core';
 ### A real-world example in 12 lines
 
 ```typescript
-import { AJAX, MSG, Events } from '@ts-util/core';
+import { AJAX, MSG, Events } from 'ts-util-core';
 
 // Listen for lifecycle events
 Events.on('ajax:before', ({ url }) => showSpinner(url));
@@ -296,7 +295,7 @@ VIEW.addBeforeLoad((context) => {
 ### Utilities
 
 ```typescript
-import { sprintf, formToJSON, isDateValid } from '@ts-util/core';
+import { sprintf, formToJSON, isDateValid } from 'ts-util-core';
 
 sprintf('Hello %s, you are %d years old', 'Alice', 30);
 // → "Hello Alice, you are 30 years old"

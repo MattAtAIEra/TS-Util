@@ -3,3 +3,6 @@ dist/
 .claude/
 .settings/
 .project
+
+img/
+readme.txt
