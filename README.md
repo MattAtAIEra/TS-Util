@@ -111,7 +111,7 @@ When multiple AI Agents co-produce code, this abstraction layer becomes even mor
 >
 > That's what TS-Util does — for your team today, and for the AI Agents that will write most of your code tomorrow.
 
-📖 Read this article in [other languages](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/why-wrap-ajax-and-view.md) (繁體中文 · 日本語 · 한국어 · Español · Deutsch)
+📖 Read this in other languages: [繁體中文](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_zh.md) · [日本語](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_jp.md) · [한국어](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_ko.md) · [Español](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_es.md) · [Deutsch](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/Readme-translations_de.md)
 
 ---
 
