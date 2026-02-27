@@ -35,9 +35,9 @@
   var VIEW = { ... };
 
   // Only expose what consumers need
-  window.$RS = {};
-  window.$RS.AJAX = AJAX;
-  window.$RS.VIEW = VIEW;
+  window.$_ = {};
+  window.$_.AJAX = AJAX;
+  window.$_.VIEW = VIEW;
 
 })(jQuery);
 ```
@@ -46,7 +46,7 @@
 
 - **Encapsulation** — Internal variables (`AJAX`, `VIEW`, helper functions) are private.
   They cannot be accidentally overwritten by other scripts on the page.
-- **Controlled public API** — Only what's explicitly assigned to `window.$RS` is accessible.
+- **Controlled public API** — Only what's explicitly assigned to `window.$_` is accessible.
 - **Dependency injection** — jQuery is passed in as `$`, making the dependency explicit
   and allowing potential replacement.
 
@@ -59,29 +59,29 @@ naming collisions across scripts.
 
 ## 2. Namespace Pattern
 
-**What it is:** A single global object (`$RS`) acts as the root container for all public APIs.
+**What it is:** A single global object (`$_`) acts as the root container for all public APIs.
 
 **Where it appears:** `ts-util-core-lib.js:765-782`
 
 ```javascript
-window.$RS = {};
-window.$RS.AJAX = AJAX;
-window.$RS.VIEW = VIEW;
-window.$RS.sprintf = sprintf;
-window.$RS.MSG = MSG;
-window.$RS.setAjaxBeforeLoadingCallback = setAjaxBeforeLoadingCallback;
-window.$RS.setAjaxAfterLoadingCallback = setAjaxAfterLoadingCallback;
+window.$_ = {};
+window.$_.AJAX = AJAX;
+window.$_.VIEW = VIEW;
+window.$_.sprintf = sprintf;
+window.$_.MSG = MSG;
+window.$_.setAjaxBeforeLoadingCallback = setAjaxBeforeLoadingCallback;
+window.$_.setAjaxAfterLoadingCallback = setAjaxAfterLoadingCallback;
 ```
 
 **Why it matters:**
 
 - **One global** instead of dozens — reduces collision risk.
-- **Discoverable API** — developers type `$RS.` and see all available features.
-- **Organized** — sub-namespaces (`$RS.AJAX`, `$RS.VIEW`, `$RS.MSG`) group related functions.
+- **Discoverable API** — developers type `$_.` and see all available features.
+- **Organized** — sub-namespaces (`$_.AJAX`, `$_.VIEW`, `$_.MSG`) group related functions.
 
 **Trade-off:**
 All modules must coordinate on this single namespace. If two modules both try to define
-`$RS.AJAX`, the last one wins silently.
+`$_.AJAX`, the last one wins silently.
 
 ---
 
@@ -95,13 +95,13 @@ but lets consumers define **what** happens by injecting their own function.
 ```javascript
 // SETTER — consumer provides their strategy
 var setAjaxBeforeLoadingCallback = function(callback) {
-  $RS.ajaxBeforeLoadingCallback = callback;
+  $_.ajaxBeforeLoadingCallback = callback;
 };
 
 // EXECUTOR — library calls the strategy at the right time
 var ajaxBeforeLoadingCallback = function() {
-  if ($.isFunction($RS.ajaxBeforeLoadingCallback)) {
-    $RS.ajaxBeforeLoadingCallback();        // <-- Consumer's code runs here
+  if ($.isFunction($_.ajaxBeforeLoadingCallback)) {
+    $_.ajaxBeforeLoadingCallback();        // <-- Consumer's code runs here
   } else {
     // DEFAULT strategy: show blockUI overlay
     $.blockUI({ ... });
@@ -140,7 +140,7 @@ var requiredInvalidCallback = function(labelNames, invalidElements) {
 ```
 Consumer Code                     Library Code
 ─────────────                     ────────────
-$RS.setAjaxBeforeLoadingCallback(
+$_.setAjaxBeforeLoadingCallback(
   showMyCustomSpinner             ──→ stored as strategy
 );
 
@@ -166,8 +166,8 @@ When new DOM content arrives, ALL registered functions are called.
 
 ```
 ts-util-core-lib.js     → VIEW.addBeforeLoad(coreBeforeLoad)
-ts-util-validate-lib.js → $RS.VIEW.addBeforeLoad(validateBeforeLoad)
-ts-util-format-lib.js   → $RS.VIEW.addBeforeLoad(formatBeforeLoad)
+ts-util-validate-lib.js → $_.VIEW.addBeforeLoad(validateBeforeLoad)
+ts-util-format-lib.js   → $_.VIEW.addBeforeLoad(formatBeforeLoad)
 ```
 
 **Implementation:** `ts-util-core-lib.js:144-163`
@@ -212,7 +212,7 @@ var VIEW = {
 - **Decoupled modules** — The core doesn't import or know about validation or formatting.
   Each module registers itself.
 - **Extensible** — Adding a new module (e.g., a tooltip plugin) requires only one line:
-  `$RS.VIEW.addBeforeLoad(myTooltipInit)`. No existing code changes.
+  `$_.VIEW.addBeforeLoad(myTooltipInit)`. No existing code changes.
 - **Dynamic content support** — When `VIEW.load()` fetches HTML via AJAX,
   the new content gets the same initialization as the original page.
   Without this pattern, dynamically loaded content would be "dead" (no datepickers,
@@ -244,7 +244,7 @@ form serialization, validation, and loading overlays behind a single `request()`
 AJAX.request = function(params) {
   // 1. Validate the form (if provided)
   if (params.form != undefined) {
-    if (!$RS.requiredValidation(params.form)) {
+    if (!$_.requiredValidation(params.form)) {
       return;  // Stop if validation fails
     }
   }
@@ -275,7 +275,7 @@ AJAX.request = function(params) {
 **What the consumer sees:**
 
 ```javascript
-$RS.AJAX.request({
+$_.AJAX.request({
   url: "api/save",
   form: $("#myForm"),
   success: function(data) { ... }
@@ -349,7 +349,7 @@ Registry: `ts-util-format-lib.js`
 ```javascript
 var formaters = [];   // <-- The registry
 
-$RS.addFormater = function(formater) {
+$_.addFormater = function(formater) {
   formaters.push(formater);  // Register
 };
 
@@ -368,17 +368,17 @@ var beforeLoad = function(context) {
 Registration: `ts-util-formater-register.js`
 
 ```javascript
-$RS.addFormater({
+$_.addFormater({
   key: "idNumber",
   formater: function($element) { $element.mask("A999999999"); }
 });
 
-$RS.addFormater({
+$_.addFormater({
   key: "date",
   formater: function($element) { $element.mask("9999-99?-99"); }
 });
 
-$RS.addFormater({
+$_.addFormater({
   key: "time",
   formater: function($element) { $element.mask("99:99"); }
 });
@@ -395,7 +395,7 @@ Usage in HTML:
 **Why it matters:**
 
 - **Open for extension** — Adding a new formatter requires zero changes to existing code.
-  Just call `$RS.addFormater({ key: "phone", formater: ... })`.
+  Just call `$_.addFormater({ key: "phone", formater: ... })`.
 - **Declarative HTML** — The HTML says *what* format it needs, not *how* to achieve it.
   This separates concerns between markup and behavior.
 - **Late binding** — Formatters are resolved at runtime, so they work even on
@@ -420,7 +420,7 @@ without modifying the element itself.
 ```javascript
 // Each constraint adds behavior via delegated events
 $(":text[constraint~='date']").live("change", function() {
-  if (!$RS.isDateValid($(this).val())) {
+  if (!$_.isDateValid($(this).val())) {
     $(this).val("");    // <-- behavior added by 'date' constraint
   }
 });
@@ -493,7 +493,7 @@ $.extend(opts, options);
 | Pattern              | Where                    | Problem Solved                              |
 |----------------------|--------------------------|---------------------------------------------|
 | Module (IIFE)        | All files                | Encapsulation without ES modules            |
-| Namespace            | `window.$RS`             | Single organized global entry point         |
+| Namespace            | `window.$_`             | Single organized global entry point         |
 | Strategy             | AJAX callbacks, validation callbacks | Replace behavior without modifying library |
 | Observer             | `VIEW.addBeforeLoad()`   | Decoupled module initialization             |
 | Facade               | `AJAX.request()`         | Hide multi-step complexity behind one call  |
