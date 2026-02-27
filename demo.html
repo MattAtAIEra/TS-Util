@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TS-Util Core — Interactive Demo</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --text: #1e293b;
+      --muted: #64748b;
+      --success: #16a34a;
+      --error: #dc2626;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 0 0 80px 0;
+    }
+
+    /* -- Header ------------------------------------------------------------ */
+    .hero {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      color: #fff;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .hero p { color: #94a3b8; font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+    .hero code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    /* -- Navigation -------------------------------------------------------- */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex; gap: 4px;
+      overflow-x: auto;
+    }
+    nav a {
+      padding: 12px 16px;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 500;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    nav a:hover, nav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* -- Layout ------------------------------------------------------------ */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+    section {
+      margin-top: 40px;
+      scroll-margin-top: 56px;
+    }
+    section h2 {
+      font-size: 1.3rem;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    section h2 .badge {
+      font-size: 0.65rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    section > p.desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+
+    /* -- Cards ------------------------------------------------------------- */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 12px 16px;
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-body { padding: 20px; }
+
+    /* -- Code blocks ------------------------------------------------------- */
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px;
+      border-radius: var(--radius);
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    pre .comment { color: #6b7280; }
+    pre .keyword { color: #c084fc; }
+    pre .string { color: #86efac; }
+    pre .fn { color: #93c5fd; }
+
+    /* -- Form elements ----------------------------------------------------- */
+    .form-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .form-row label {
+      width: 140px;
+      flex-shrink: 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-align: right;
+    }
+    .form-row input[type="text"],
+    .form-row textarea,
+    .form-row select {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    .form-row .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      width: 100%;
+      padding-left: 152px;
+      margin-top: -6px;
+    }
+
+    /* -- Buttons ----------------------------------------------------------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: var(--card);
+      transition: all 0.15s;
+    }
+    .btn:hover { background: #f1f5f9; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: var(--success); color: #fff; border-color: var(--success); }
+    .btn-success:hover { background: #15803d; }
+    .btn-danger { background: var(--error); color: #fff; border-color: var(--error); }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
+    /* -- Log console ------------------------------------------------------- */
+    .log-console {
+      background: var(--code-bg);
+      color: #a5f3fc;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      min-height: 100px;
+      max-height: 240px;
+      overflow-y: auto;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      line-height: 1.8;
+      margin-top: 12px;
+    }
+    .log-console:empty::before {
+      content: "// Output will appear here...";
+      color: #475569;
+    }
+    .log-console .log-line { padding: 2px 0; }
+    .log-console .log-event { color: #fbbf24; }
+    .log-console .log-ok { color: #86efac; }
+    .log-console .log-err { color: #fca5a5; }
+    .log-console .log-info { color: #93c5fd; }
+
+    /* -- Two-column layout ------------------------------------------------- */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 700px) {
+      .split { grid-template-columns: 1fr; }
+      .form-row label { width: 100%; text-align: left; }
+      .form-row .hint { padding-left: 0; }
+    }
+
+    /* -- Radio / Checkbox group -------------------------------------------- */
+    .radio-group { display: flex; gap: 16px; }
+    .radio-group label { width: auto; display: flex; align-items: center; gap: 4px; }
+  </style>
+</head>
+
+<body>
+  <!-- ================================================================== -->
+  <!-- HERO                                                               -->
+  <!-- ================================================================== -->
+  <div class="hero">
+    <h1># TS-Util Core — Demo</h1>
+    <p>Interactive guide for engineers. Each section demonstrates a module
+       with live code you can trigger. Open DevTools to see events flowing.</p>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- NAV                                                                -->
+  <!-- ================================================================== -->
+  <nav>
+    <a href="#events">Events</a>
+    <a href="#ajax">AJAX</a>
+    <a href="#validation">Validation</a>
+    <a href="#formatting">Formatting</a>
+    <a href="#msg">MSG</a>
+    <a href="#view">VIEW</a>
+    <a href="#utils">Utilities</a>
+  </nav>
+
+  <div class="container">
+    <!-- ================================================================ -->
+    <!-- 1. EVENTS — the central bus                                      -->
+    <!-- ================================================================ -->
+    <section id="events">
+      <h2>Events <span class="badge">Mediator Pattern</span></h2>
+      <p class="desc">
+        The <code>Events</code> bus is the central nervous system.
+        All modules communicate through typed events.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">Code</div>
+          <div class="card-body">
+<pre><span class="comment">// Subscribe to lifecycle events</span>
+<span class="keyword">import</span> { Events } <span class="keyword">from</span> <span class="string">'@ts-util/core'</span>;
+
+Events.<span class="fn">on</span>(<span class="string">'ajax:before'</span>, ({ url }) => {
+  console.log(<span class="string">`Loading ${url}...`</span>);
+});
+
+Events.<span class="fn">on</span>(<span class="string">'ajax:after'</span>, ({ url }) => {
+  console.log(<span class="string">`Done: ${url}`</span>);
+});
+
+Events.<span class="fn">on</span>(<span class="string">'validation:invalid'</span>, ({ labelNames }) => {
+  console.log(<span class="string">`Missing: ${labelNames}`</span>);
+});</pre>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoEmitAjax()">Emit ajax:before + ajax:after</button>
+              <button class="btn" onclick="demoEmitValidation()">Emit validation:invalid</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Live Output</div>
+          <div class="card-body">
+            <div class="log-console" id="events-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 2. AJAX                                                          -->
+    <!-- ================================================================ -->
+    <section id="ajax">
+      <h2>AJAX <span class="badge">Facade + Template Method</span></h2>
+      <p class="desc">
+        <code>AJAX.request()</code> orchestrates validate &rarr; emit &rarr; fetch &rarr; emit.
+        <code>AJAX.requestJSON()</code> adds automatic JSON parsing.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">Code</div>
+          <div class="card-body">
+<pre><span class="comment">// Simple POST request</span>
+<span class="keyword">await</span> AJAX.<span class="fn">request</span>({
+  url: <span class="string">'/api/users'</span>,
+  data: { name: <span class="string">'Alice'</span> },
+  success: (res) => log(<span class="string">'Response received'</span>),
+  noblock: <span class="keyword">true</span>,
+});
+
+<span class="comment">// POST with form auto-serialization</span>
+<span class="keyword">await</span> AJAX.<span class="fn">request</span>({
+  url: <span class="string">'/api/save'</span>,
+  form: document.<span class="fn">getElementById</span>(<span class="string">'myForm'</span>),
+});
+
+<span class="comment">// JSON with typed response</span>
+<span class="keyword">const</span> user = <span class="keyword">await</span> AJAX.<span class="fn">requestJSON</span>&lt;User&gt;({
+  url: <span class="string">'/api/user/1'</span>,
+});</pre>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoAjaxRequest()">Try AJAX.request()</button>
+              <button class="btn" onclick="demoAjaxWithForm()">Try with form serialization</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Live Output</div>
+          <div class="card-body">
+            <div id="ajax-demo-form" style="margin-bottom: 12px;">
+              <div class="form-row">
+                <label>Username:</label>
+                <input type="text" name="username" value="alice" />
+              </div>
+              <div class="form-row">
+                <label>Role:</label>
+                <select name="role">
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                  <option value="viewer" selected>Viewer</option>
+                </select>
+              </div>
+            </div>
+            <div class="log-console" id="ajax-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 3. VALIDATION                                                    -->
+    <!-- ================================================================ -->
+    <section id="validation">
+      <h2>Validation <span class="badge">Strategy + Decorator + Registry</span></h2>
+      <p class="desc">
+        Declare constraints via HTML attributes. The library auto-attaches behavior.
+        Combine multiple constraints with spaces: <code>constraint="required number"</code>
+      </p>
+
+      <div class="card">
+        <div class="card-header">Interactive Form — Try submitting with empty fields</div>
+        <div class="card-body">
+          <form id="demo-form" onsubmit="return handleDemoSubmit(event)">
+            <div class="form-row">
+              <label>Name *</label>
+              <input type="text" name="name" constraint="required" labelName="Name" />
+            </div>
+            <div class="form-row">
+              <label>Amount *</label>
+              <input type="text" name="amount" constraint="required number" labelName="Amount" />
+              <div class="hint">constraint="required number" — only digits, dot, minus allowed</div>
+            </div>
+            <div class="form-row">
+              <label>Date</label>
+              <input type="text" name="date" constraint="date" labelName="Date" placeholder="yyyy-mm-dd" />
+              <div class="hint">constraint="date" — validates yyyy-mm-dd format on change</div>
+            </div>
+            <div class="form-row">
+              <label>Time</label>
+              <input type="text" name="time" constraint="time" labelName="Time" placeholder="HH:MM" />
+              <div class="hint">constraint="time" — auto-formats on blur (try typing "1430")</div>
+            </div>
+            <div class="form-row">
+              <label>Code *</label>
+              <input type="text" name="code" constraint="required upperCase onlyEn" labelName="Code" />
+              <div class="hint">constraint="required upperCase onlyEn" — three constraints combined!</div>
+            </div>
+            <div class="form-row">
+              <label>Category *</label>
+              <select name="category" constraint="required" labelName="Category">
+                <option value="">-- select --</option>
+                <option value="A">Category A</option>
+                <option value="B">Category B</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Priority *</label>
+              <div class="radio-group">
+                <label><input type="radio" name="priority" value="high" constraint="required" labelName="Priority" /> High</label>
+                <label><input type="radio" name="priority" value="mid" constraint="required" labelName="Priority" /> Medium</label>
+                <label><input type="radio" name="priority" value="low" constraint="required" labelName="Priority" /> Low</label>
+              </div>
+            </div>
+            <div class="form-row">
+              <label>Notes</label>
+              <textarea name="notes" maxlength="30" labelName="Notes" rows="2" placeholder="Max 30 chars — try exceeding it"></textarea>
+              <div class="hint">Textarea with maxlength="30" — validated on submit</div>
+            </div>
+
+            <div class="btn-group" style="padding-left: 152px;">
+              <button type="submit" class="btn btn-primary">Submit (validates)</button>
+              <button type="submit" class="btn" ignoreValidation="true">Submit (skip validation)</button>
+            </div>
+          </form>
+          <div class="log-console" id="validation-log" style="margin-top: 16px;"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top: 16px;">
+        <div class="card-header">Custom Constraint — extend the library</div>
+        <div class="card-body">
+<pre><span class="comment">// Register a custom 'email' constraint</span>
+Validation.<span class="fn">addConstraint</span>({
+  name: <span class="string">'email'</span>,
+  attach(el) {
+    el.addEventListener(<span class="string">'change'</span>, () => {
+      <span class="keyword">if</span> (el.value && !el.value.includes(<span class="string">'@'</span>)) {
+        el.value = <span class="string">''</span>;
+        alert(<span class="string">'Invalid email'</span>);
+      }
+    });
+  },
+});
+
+<span class="comment">// Now use it in HTML:</span>
+<span class="comment">// &lt;input constraint="required email" labelName="Email" /&gt;</span></pre>
+          <div class="form-row">
+            <label>Email (custom):</label>
+            <input type="text" id="email-demo" constraint="required email" labelName="Email" placeholder="Must contain @" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 4. FORMATTING                                                    -->
+    <!-- ================================================================ -->
+    <section id="formatting">
+      <h2>Formatting <span class="badge">Registry Pattern</span></h2>
+      <p class="desc">
+        Declare <code>format="..."</code> on inputs. The library auto-applies input masks.
+        Type freely — the mask formats as you go.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">Built-in Formatters</div>
+          <div class="card-body">
+            <div class="form-row">
+              <label>ID Number:</label>
+              <input type="text" format="idNumber" placeholder="A123456789" />
+              <div class="hint">format="idNumber" — [A-Z] + 9 digits</div>
+            </div>
+            <div class="form-row">
+              <label>Date:</label>
+              <input type="text" format="date" placeholder="YYYY-MM-DD" />
+              <div class="hint">format="date" — auto-inserts dashes</div>
+            </div>
+            <div class="form-row">
+              <label>Time:</label>
+              <input type="text" format="time" placeholder="HH:MM" />
+              <div class="hint">format="time" — auto-inserts colon</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Custom Formatter — add your own</div>
+          <div class="card-body">
+<pre><span class="comment">// Register a phone formatter</span>
+Formatter.<span class="fn">add</span>({
+  key: <span class="string">'phone'</span>,
+  format: (el) => {
+    el.placeholder = <span class="string">'09XX-XXX-XXX'</span>;
+    el.addEventListener(<span class="string">'input'</span>, () => {
+      <span class="keyword">let</span> v = el.value.replace(/\D/g, <span class="string">''</span>);
+      <span class="keyword">if</span> (v.length > 4) v = v.slice(0,4)+<span class="string">'-'</span>+v.slice(4);
+      <span class="keyword">if</span> (v.length > 8) v = v.slice(0,8)+<span class="string">'-'</span>+v.slice(8);
+      el.value = v.slice(0, 12);
+    });
+  },
+});</pre>
+            <div class="form-row" style="margin-top: 12px;">
+              <label>Phone:</label>
+              <input type="text" id="phone-demo" placeholder="Try after clicking Register" />
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoRegisterPhone()">Register + Apply formatter</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 5. MSG                                                           -->
+    <!-- ================================================================ -->
+    <section id="msg">
+      <h2>MSG <span class="badge">Facade Pattern</span></h2>
+      <p class="desc">
+        Vanilla DOM dialogs — no 3rd-party library needed. Fully styleable via CSS classes.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">Code</div>
+          <div class="card-body">
+<pre><span class="comment">// Auto-closing notification</span>
+MSG.<span class="fn">info</span>(<span class="string">'Saved successfully!'</span>, {
+  autoclose: 3000,
+  title: <span class="string">'Success'</span>,
+});
+
+<span class="comment">// Modal that must be dismissed</span>
+MSG.<span class="fn">modal</span>(<span class="string">'Session expired.'</span>, {
+  title: <span class="string">'Warning'</span>,
+});
+
+<span class="comment">// Confirmation dialog</span>
+MSG.<span class="fn">confirm</span>(
+  <span class="string">'Delete Item'</span>,
+  <span class="string">'Are you sure?'</span>,
+  () => { <span class="comment">/* delete logic */</span> },
+);</pre>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Try it</div>
+          <div class="card-body">
+            <div class="btn-group" style="flex-direction: column;">
+              <button class="btn btn-success" onclick="demoMsgInfo()">MSG.info() — auto-closes in 3s</button>
+              <button class="btn btn-primary" onclick="demoMsgModal()">MSG.modal() — must click OK</button>
+              <button class="btn btn-danger" onclick="demoMsgConfirm()">MSG.confirm() — Yes / No</button>
+              <button class="btn" onclick="demoMsgDismiss()">MSG.dismissModal()</button>
+            </div>
+            <div class="log-console" id="msg-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 6. VIEW                                                          -->
+    <!-- ================================================================ -->
+    <section id="view">
+      <h2>VIEW <span class="badge">Observer Pattern</span></h2>
+      <p class="desc">
+        Load HTML fragments dynamically. All <code>beforeLoad</code> hooks run
+        automatically — new content gets validation, formatting, everything.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">Code</div>
+          <div class="card-body">
+<pre><span class="comment">// Register your own beforeLoad hook</span>
+VIEW.<span class="fn">addBeforeLoad</span>((context) => {
+  <span class="comment">// Runs on every new DOM fragment</span>
+  context.<span class="fn">querySelectorAll</span>(<span class="string">'.highlight'</span>)
+    .forEach(el => el.style.background = <span class="string">'#fef08a'</span>);
+});
+
+<span class="comment">// Load HTML into a container</span>
+<span class="keyword">await</span> VIEW.<span class="fn">load</span>(targetElement, {
+  url: <span class="string">'/api/partial'</span>,
+});
+
+<span class="comment">// Or manually inject + init</span>
+targetElement.innerHTML = htmlString;
+VIEW.<span class="fn">invokeBeforeLoad</span>(targetElement);</pre>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoViewInject()">Inject HTML + run hooks</button>
+              <button class="btn" onclick="demoViewClear()">Clear</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">Dynamic Content Target</div>
+          <div class="card-body">
+            <div id="view-target" style="min-height: 80px; border: 2px dashed var(--border); border-radius: 6px; padding: 16px; color: var(--muted); font-size: 0.85rem;">
+              Content will be injected here. Constraints and formatters will auto-initialize.
+            </div>
+            <div class="log-console" id="view-log"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- 7. UTILITIES                                                     -->
+    <!-- ================================================================ -->
+    <section id="utils">
+      <h2>Utilities <span class="badge">Pure Functions</span></h2>
+      <p class="desc">
+        Standalone helpers — <code>sprintf</code>, <code>formToJSON</code>,
+        <code>isDateValid</code>. No side effects, fully testable.
+      </p>
+
+      <div class="split">
+        <div class="card">
+          <div class="card-header">sprintf</div>
+          <div class="card-body">
+<pre><span class="fn">sprintf</span>(<span class="string">'Hello %s, you are %d'</span>, <span class="string">'Alice'</span>, 30)
+<span class="comment">// → "Hello Alice, you are 30"</span>
+
+<span class="fn">sprintf</span>(<span class="string">'Price: $%0.2f'</span>, 9.5)
+<span class="comment">// → "Price: $9.50"</span>
+
+<span class="fn">sprintf</span>(<span class="string">'Hex: %04X'</span>, 255)
+<span class="comment">// → "Hex: 00FF"</span></pre>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoSprintf()">Run examples</button>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">formToJSON + isDateValid</div>
+          <div class="card-body">
+<pre><span class="keyword">import</span> { formToJSON, isDateValid } <span class="keyword">from</span> <span class="string">'@ts-util/core'</span>;
+
+<span class="keyword">const</span> data = <span class="fn">formToJSON</span>(formElement);
+<span class="comment">// → { username: "alice", role: "viewer" }</span>
+
+<span class="fn">isDateValid</span>(<span class="string">'2026-02-24'</span>)  <span class="comment">// → true</span>
+<span class="fn">isDateValid</span>(<span class="string">'not-a-date'</span>) <span class="comment">// → false</span></pre>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="demoFormToJSON()">Serialize AJAX form above</button>
+              <button class="btn" onclick="demoDateValid()">Test isDateValid()</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="log-console" id="utils-log" style="margin-top: 12px;"></div>
+    </section>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- SCRIPTS                                                            -->
+  <!-- ================================================================== -->
+  <script type="module">
+    // ---------------------------------------------------------------
+    // Import everything from the library
+    // ---------------------------------------------------------------
+    import {
+      Events, AJAX, VIEW, MSG, Validation, Formatter,
+      sprintf, formToJSON, isDateValid,
+    } from './dist/index.js';
+
+    // Expose to window so inline onclick handlers can access them
+    Object.assign(window, {
+      Events, AJAX, VIEW, MSG, Validation, Formatter,
+      sprintf, formToJSON, isDateValid,
+    });
+
+    // ---------------------------------------------------------------
+    // Helper: append a line to a log console
+    // ---------------------------------------------------------------
+    window.log = function(containerId, text, type = 'info') {
+      const el = document.getElementById(containerId);
+      const line = document.createElement('div');
+      line.className = 'log-line';
+
+      const prefix = {
+        event: '<span class="log-event">[EVENT]</span> ',
+        ok:    '<span class="log-ok">[OK]</span> ',
+        err:   '<span class="log-err">[ERROR]</span> ',
+        info:  '<span class="log-info">[INFO]</span> ',
+      }[type] || '';
+
+      line.innerHTML = prefix + escapeHtml(text);
+      el.appendChild(line);
+      el.scrollTop = el.scrollHeight;
+    };
+
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // ---------------------------------------------------------------
+    // Register global event listeners (demonstrates the Mediator)
+    // ---------------------------------------------------------------
+    Events.on('ajax:before', ({ url }) => {
+      log('events-log', `ajax:before → url="${url}"`, 'event');
+    });
+    Events.on('ajax:after', ({ url }) => {
+      log('events-log', `ajax:after → url="${url}"`, 'event');
+    });
+    Events.on('ajax:error', ({ url, error }) => {
+      log('events-log', `ajax:error → url="${url}" error="${error.message}"`, 'event');
+    });
+    Events.on('view:beforeLoad', ({ context }) => {
+      const count = context.querySelectorAll('[constraint]').length;
+      log('events-log', `view:beforeLoad → ${count} constrained element(s) found`, 'event');
+    });
+    Events.on('validation:invalid', ({ labelNames }) => {
+      log('events-log', `validation:invalid → missing: [${labelNames.join(', ')}]`, 'event');
+    });
+
+    // ---------------------------------------------------------------
+    // Register a custom "email" constraint for the demo
+    // ---------------------------------------------------------------
+    Validation.addConstraint({
+      name: 'email',
+      attach(el) {
+        el.addEventListener('change', () => {
+          if (el.value && !el.value.includes('@')) {
+            el.value = '';
+            MSG.info('Invalid email — must contain @', { title: 'Validation', autoclose: 2000 });
+          }
+        });
+      },
+    });
+
+    // ---------------------------------------------------------------
+    // Register a beforeLoad hook that highlights .highlight elements
+    // ---------------------------------------------------------------
+    VIEW.addBeforeLoad((context) => {
+      context.querySelectorAll('.highlight').forEach(el => {
+        el.style.background = '#fef08a';
+        el.style.padding = '2px 4px';
+        el.style.borderRadius = '3px';
+      });
+      log('view-log', 'Custom beforeLoad hook ran — highlighted .highlight elements', 'ok');
+    });
+
+    // ---------------------------------------------------------------
+    // Override the default required-invalid callback
+    // ---------------------------------------------------------------
+    Validation.setRequiredInvalidCallback((labelNames, elements) => {
+      log('validation-log', `Required fields missing: ${labelNames.join(', ')}`, 'err');
+      // Visually indicate invalid fields
+      elements.forEach(el => {
+        el.style.borderColor = '#dc2626';
+        el.style.boxShadow = '0 0 0 3px rgba(220,38,38,0.15)';
+        setTimeout(() => {
+          el.style.borderColor = '';
+          el.style.boxShadow = '';
+        }, 2000);
+      });
+      elements[0]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    Validation.setTextareaTooLongCallback((labelNames, maxlengths, elements) => {
+      const msgs = labelNames.map((n, i) => `"${n}" exceeds max length ${maxlengths[i]}`);
+      log('validation-log', msgs.join('; '), 'err');
+      elements.forEach(el => {
+        el.style.borderColor = '#dc2626';
+        setTimeout(() => { el.style.borderColor = ''; }, 2000);
+      });
+    });
+
+    // ---------------------------------------------------------------
+    // Initialize constraints on existing page content
+    // ---------------------------------------------------------------
+    VIEW.initPage();
+
+    // ---------------------------------------------------------------
+    // Demo functions (called by onclick handlers)
+    // ---------------------------------------------------------------
+
+    // -- Events demos --
+    window.demoEmitAjax = function() {
+      Events.emit('ajax:before', { url: '/api/demo' });
+      setTimeout(() => Events.emit('ajax:after', { url: '/api/demo' }), 500);
+    };
+    window.demoEmitValidation = function() {
+      Events.emit('validation:invalid', { labelNames: ['Name', 'Email'], elements: [] });
+    };
+
+    // -- AJAX demos --
+    window.demoAjaxRequest = async function() {
+      log('ajax-log', 'Calling AJAX.request({ url: "/api/users" })...', 'info');
+      await AJAX.request({
+        url: '/api/users',
+        data: { name: 'Alice' },
+        noblock: true,
+        success: () => log('ajax-log', 'Success callback fired', 'ok'),
+        error: (err) => log('ajax-log', `Expected error (no server): ${err.message}`, 'err'),
+      });
+    };
+    window.demoAjaxWithForm = function() {
+      const form = document.getElementById('ajax-demo-form');
+      const data = formToJSON(form);
+      log('ajax-log', `formToJSON result: ${JSON.stringify(data)}`, 'ok');
+    };
+
+    // -- Validation demos --
+    window.handleDemoSubmit = function(e) {
+      e.preventDefault();
+      log('validation-log', 'Form submitted — all validations passed!', 'ok');
+      const data = formToJSON(document.getElementById('demo-form'));
+      log('validation-log', `Data: ${JSON.stringify(data)}`, 'info');
+      return false;
+    };
+
+    // -- Formatting demos --
+    window.demoRegisterPhone = function() {
+      const el = document.getElementById('phone-demo');
+      Formatter.add({
+        key: 'phone',
+        format: (input) => {
+          input.placeholder = '09XX-XXX-XXX';
+          input.addEventListener('input', () => {
+            let v = input.value.replace(/\D/g, '');
+            if (v.length > 4) v = v.slice(0,4) + '-' + v.slice(4);
+            if (v.length > 8) v = v.slice(0,8) + '-' + v.slice(8);
+            input.value = v.slice(0, 12);
+          });
+        },
+      });
+      el.setAttribute('format', 'phone');
+      Formatter.applyAll(el.parentElement);
+      el.placeholder = '09XX-XXX-XXX';
+      MSG.info('Phone formatter registered! Try typing a number.', { title: 'Formatter', autoclose: 2000 });
+    };
+
+    // -- MSG demos --
+    window.demoMsgInfo = function() {
+      MSG.info('Data saved successfully!', { title: 'Success', autoclose: 3000 });
+      log('msg-log', 'MSG.info() shown — will auto-close in 3s', 'ok');
+    };
+    window.demoMsgModal = function() {
+      MSG.modal('Your session is about to expire. Please save your work.', { title: 'Warning' });
+      log('msg-log', 'MSG.modal() shown — click OK to dismiss', 'info');
+    };
+    window.demoMsgConfirm = function() {
+      MSG.confirm('Delete Record', 'Are you sure you want to delete this item? This cannot be undone.', () => {
+        log('msg-log', 'User confirmed — item deleted!', 'ok');
+      });
+      log('msg-log', 'MSG.confirm() shown — waiting for user choice...', 'info');
+    };
+    window.demoMsgDismiss = function() {
+      MSG.dismissModal();
+      log('msg-log', 'MSG.dismissModal() called', 'info');
+    };
+
+    // -- VIEW demos --
+    window.demoViewInject = function() {
+      const target = document.getElementById('view-target');
+      target.innerHTML = `
+        <div style="font-size: 0.9rem;">
+          <p><strong>Dynamically injected content</strong> — hooks ran automatically:</p>
+          <div class="form-row" style="margin-top: 12px;">
+            <label>Dynamic Field *</label>
+            <input type="text" name="dynamic_name" constraint="required upperCase" labelName="Dynamic Field" />
+          </div>
+          <div class="form-row">
+            <label>Dynamic Date:</label>
+            <input type="text" name="dynamic_date" format="date" />
+          </div>
+          <p style="margin-top:8px;">
+            This <span class="highlight">highlighted text</span> was styled by the custom beforeLoad hook.
+            The input above has <span class="highlight">constraint="required upperCase"</span> — try typing lowercase.
+          </p>
+        </div>
+      `;
+      VIEW.invokeBeforeLoad(target);
+      log('view-log', 'HTML injected + VIEW.invokeBeforeLoad() called', 'ok');
+    };
+    window.demoViewClear = function() {
+      const target = document.getElementById('view-target');
+      target.innerHTML = 'Content will be injected here. Constraints and formatters will auto-initialize.';
+      target.style.color = 'var(--muted)';
+      log('view-log', 'Target cleared', 'info');
+    };
+
+    // -- Utility demos --
+    window.demoSprintf = function() {
+      const examples = [
+        [sprintf('Hello %s, you are %d', 'Alice', 30), "sprintf('Hello %s, you are %d', 'Alice', 30)"],
+        [sprintf('Price: $%.2f', 9.5), "sprintf('Price: $%.2f', 9.5)"],
+        [sprintf('Hex: %04X', 255), "sprintf('Hex: %04X', 255)"],
+        [sprintf('Padded: [%-10s]', 'left'), "sprintf('Padded: [%-10s]', 'left')"],
+      ];
+      examples.forEach(([result, expr]) => {
+        log('utils-log', `${expr}  →  "${result}"`, 'ok');
+      });
+    };
+    window.demoFormToJSON = function() {
+      const form = document.getElementById('ajax-demo-form');
+      const data = formToJSON(form);
+      log('utils-log', `formToJSON(#ajax-demo-form) → ${JSON.stringify(data, null, 2)}`, 'ok');
+    };
+    window.demoDateValid = function() {
+      const tests = ['2026-02-24', '2026/12/31', 'not-a-date', '123', '2026-1-5'];
+      tests.forEach(t => {
+        log('utils-log', `isDateValid("${t}") → ${isDateValid(t)}`, isDateValid(t) ? 'ok' : 'err');
+      });
+    };
+
+    // ---------------------------------------------------------------
+    // Nav active state
+    // ---------------------------------------------------------------
+    const navLinks = document.querySelectorAll('nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+          link?.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+
+  </script>
+</body>
+</html>
