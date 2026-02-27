@@ -12,7 +12,7 @@
   <a href="#live-demo">Live Demo</a>&ensp;&bull;&ensp;
   <a href="#modules">Modules</a>&ensp;&bull;&ensp;
   <a href="#api-reference">API Reference</a>&ensp;&bull;&ensp;
-  <a href="docs/good-design-pattern-implementation-after.md">Design Patterns</a>
+  <a href="https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-after.md">Design Patterns</a>
 </p>
 
 ---
@@ -38,7 +38,7 @@ Every frontend project eventually hits the same problem: ten engineers (or ten A
 
 > **Wrapping isn't about writing less code — it's about making ten people, or ten Agents, produce output that looks like it came from one.**
 
-📖 Read the full article in [six languages](docs/why-wrap-ajax-and-view.md) (繁體中文 · English · 日本語 · 한국어 · Español · Deutsch)
+📖 Read the full article in [six languages](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/why-wrap-ajax-and-view.md) (繁體中文 · English · 日本語 · 한국어 · Español · Deutsch)
 
 ---
 
@@ -401,8 +401,8 @@ This library is a teaching-friendly codebase. Every module implements a named Go
 | **Decorator** | `constraint="..."` attributes | Composable behavior via HTML |
 
 Deep-dive documentation:
-- **[Before (jQuery)](docs/good-design-pattern-implementation-before.md)** — patterns in the original codebase
-- **[After (TypeScript)](docs/good-design-pattern-implementation-after.md)** — how TypeScript makes them safer
+- **[Before (jQuery)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-before.md)** — patterns in the original codebase
+- **[After (TypeScript)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-after.md)** — how TypeScript makes them safer
 
 ---
 
