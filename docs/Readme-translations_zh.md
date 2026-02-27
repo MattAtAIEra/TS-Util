@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>一條管線，同一套護欄——不管寫程式的是你的團隊，還是 AI Agent。</strong>
+  <strong>一套框架，同一套護欄——不管寫程式的是你的團隊，還是 AI Agent。</strong>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ Code review 只能亡羊補牢。**架構才能釜底抽薪。**
 
 ## 2. 運作方式
 
-TS-Util 把 AJAX、VIEW、驗證、格式化和訊息通知收攏成**一條強制管線**。不管是人還是 AI，只要呼叫 `AJAX.request()`，以下步驟就會自動跑完：
+TS-Util 把 AJAX、VIEW、驗證、格式化和訊息通知收攏成**一套統一框架**。不管是人還是 AI，只要呼叫 `AJAX.request()`，以下步驟就會自動跑完：
 
 ```
    AJAX.request({ url, form })
@@ -59,7 +59,7 @@ await AJAX.request({
 });
 
 // 其他一切——驗證、loading 狀態、錯誤事件、
-// 資料序列化——都由管線處理。
+// 資料序列化——都由框架處理。
 ```
 
 `VIEW.load()` 也是同樣的道理——每一段動態載入的 HTML 都會自動走完約束綁定、輸入格式化、自訂 hook。不用手動初始化，想漏也漏不了。
@@ -84,7 +84,7 @@ await VIEW.load(container, { url: '/api/partial-view' });
 | Code review 爭論風格 | 架構強制風格 |
 
 - **消滅分歧**：全隊只有一套 API 要學，沒有「我習慣這樣寫」的爭議空間。
-- **一致性靠架構，不靠自律**：所有請求走同一條管線，loading 遮罩不可能漏、驗證不可能跳——因為管線替你做了。
+- **一致性靠架構，不靠自律**：所有請求走同一套框架，loading 遮罩不可能漏、驗證不可能跳——因為框架替你做了。
 - **新人即戰力**：看一個 `AJAX.request()` 範例就能上手，不必在散落各處的十種寫法裡考古。
 
 ### 對 AI Agent
@@ -93,14 +93,14 @@ await VIEW.load(container, { url: '/api/partial-view' });
 |--------|-------|
 | Agent 展開 15 行 fetch + 驗證 + 錯誤處理 | Agent 產出 1 行：`AJAX.request({ url, form })` |
 | Context window 燒在樣板程式碼上 | Token 保留給業務邏輯 |
-| 不同 Agent 產出不同模式 | 所有 Agent 產出相同的管線呼叫 |
-| 必須審查每個 Agent 的輸出是否遺漏步驟 | 管線保證完整性——**設計即護欄** |
+| 不同 Agent 產出不同模式 | 所有 Agent 產出相同的框架呼叫 |
+| 必須審查每個 Agent 的輸出是否遺漏步驟 | 框架保證完整性——**設計即護欄** |
 | Agent「忘記」loading 遮罩 | 不可能——架構強制執行 |
 
 當多個 AI Agent 同時在產出程式碼，這層封裝的價值只會更大：
 
 - **省 token 就是省品質**：Agent 只要吐出 `AJAX.request({ url, form })` 一行，不必每次從頭展開 `fetch` + 驗證 + 錯誤處理 + loading。Context window 是 AI 最稀缺的資源，省下的 token 都能拿去處理真正的業務邏輯。
-- **誰寫的都一樣**：不同 Agent 的產出全部匯入同一條管線，結果天然一致。你不需要挨個檢查「這個 Agent 有沒有忘記加 loading」。
+- **誰寫的都一樣**：不同 Agent 的產出全部走同一套框架，結果天然一致。你不需要挨個檢查「這個 Agent 有沒有忘記加 loading」。
 - **護欄即架構**：封裝層本身就是護欄。Agent 想「忘記」驗證表單？不可能——`AJAX.request()` 替它做了。紀律不靠記性，靠的是架構。
 
 ### 一句話說完

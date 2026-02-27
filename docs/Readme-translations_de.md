@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Eine Pipeline. Dieselben Leitplanken. Egal, ob dein Team tippt oder deine KI-Agenten generieren.</strong>
+  <strong>Ein Framework. Dieselben Leitplanken. Egal, ob dein Team tippt oder deine KI-Agenten generieren.</strong>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ Code-Review fängt einiges ab. **Architektur fängt alles ab.**
 
 ## 2. So funktioniert es
 
-TS-Util bündelt AJAX, VIEW, Validierung, Formatierung und Messaging in **einer einzigen Pipeline, an der niemand vorbeikommt**. Sobald jemand — Mensch oder KI — `AJAX.request()` aufruft, läuft automatisch ab:
+TS-Util bündelt AJAX, VIEW, Validierung, Formatierung und Messaging in **einem einzigen Framework, an dem niemand vorbeikommt**. Sobald jemand — Mensch oder KI — `AJAX.request()` aufruft, läuft automatisch ab:
 
 ```
    AJAX.request({ url, form })
@@ -59,7 +59,7 @@ await AJAX.request({
 });
 
 // Alles andere — Validierung, Ladezustand, Fehler-Events,
-// Datenserialisierung — wird von der Pipeline behandelt.
+// Datenserialisierung — wird vom Framework behandelt.
 ```
 
 Für `VIEW.load()` gilt dasselbe Prinzip: Jedes dynamisch geladene HTML-Fragment durchläuft automatisch Constraint-Binding, Input-Formatierung und Hook-Ausführung. Kein manuelles Initialisieren. Kein „Ups, die Validierung für den neuen Content vergessen".
@@ -84,7 +84,7 @@ await VIEW.load(container, { url: '/api/partial-view' });
 | Code-Review-Debatten über Stil | Die Architektur gibt den Stil vor |
 
 - **Schluss mit Wildwuchs**: Eine API lernen, fertig — keine endlosen Debatten über Implementierungsdetails.
-- **Konsistenz ab Werk**: Jede Anfrage läuft durch dieselbe Pipeline. Lade-Overlays vergessen? Validierung überspringen? Geht gar nicht.
+- **Konsistenz ab Werk**: Jede Anfrage läuft durch dasselbe Framework. Lade-Overlays vergessen? Validierung überspringen? Geht gar nicht.
 - **Schnelleres Onboarding**: Ein `AJAX.request()`-Beispiel reicht, um loszulegen — statt zehn verstreute Muster zu entziffern.
 
 ### Für KI-Agenten
@@ -93,14 +93,14 @@ await VIEW.load(container, { url: '/api/partial-view' });
 |--------|-------|
 | Agent bläht 15 Zeilen fetch + Validierung + Fehlerbehandlung auf | Agent gibt 1 Zeile aus: `AJAX.request({ url, form })` |
 | Kontextfenster verpulvert für Boilerplate | Token frei für echte Geschäftslogik |
-| Verschiedene Agenten, verschiedene Muster | Alle Agenten, identische Pipeline-Aufrufe |
-| Jede Agentenausgabe manuell auf fehlende Schritte prüfen | Pipeline garantiert Vollständigkeit — **Leitplanke by Design** |
+| Verschiedene Agenten, verschiedene Muster | Alle Agenten, identische Framework-Aufrufe |
+| Jede Agentenausgabe manuell auf fehlende Schritte prüfen | Framework garantiert Vollständigkeit — **Leitplanke by Design** |
 | Agent „vergisst" das Lade-Overlay | Geht nicht — die Architektur lässt es nicht zu |
 
 Sobald mehrere KI-Agenten zusammen Code erzeugen, wird diese Abstraktionsschicht zum entscheidenden Hebel:
 
 - **Token-Effizienz**: Eine Zeile `AJAX.request({ url, form })` statt jedes Mal `fetch` + Validierung + Fehlerbehandlung + Ladezustand ausrollen. Das Kontextfenster ist die wertvollste Ressource der KI — weniger Token verbrannt heißt mehr Raum für Qualität.
-- **Vorhersagbares Verhalten**: Egal welcher Agent den Code schreibt, alles fließt durch dieselbe Pipeline. Du musst nicht mühsam nachprüfen, ob ein Agent das Lade-Overlay vergessen hat.
+- **Vorhersagbares Verhalten**: Egal welcher Agent den Code schreibt, alles fließt durch dasselbe Framework. Du musst nicht mühsam nachprüfen, ob ein Agent das Lade-Overlay vergessen hat.
 - **Leitplanken-Effekt**: Die Abstraktionsschicht selbst ist die Leitplanke. Formularvalidierung vergessen? Unmöglich, weil `AJAX.request()` sie automatisch durchführt. Disziplin entsteht durch Architektur, nicht durch guten Willen.
 
 ### Die Kernidee

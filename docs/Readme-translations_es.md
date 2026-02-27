@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Un solo pipeline. Las mismas garantías. Da igual si quien escribe el código es tu equipo o tus Agentes de IA.</strong>
+  <strong>Un solo framework. Las mismas garantías. Da igual si quien escribe el código es tu equipo o tus Agentes de IA.</strong>
 </p>
 
 <p align="center">
@@ -37,7 +37,7 @@ La revisión de código pesca algunos de estos problemas. **La arquitectura los 
 
 ## 2. Cómo funciona
 
-TS-Util encapsula AJAX, VIEW, validación, formateo y mensajería en **un único pipeline obligatorio**. Cuando alguien — humano o IA — llama a `AJAX.request()`, todo esto ocurre solo:
+TS-Util encapsula AJAX, VIEW, validación, formateo y mensajería en **un único framework unificado**. Cuando alguien — humano o IA — llama a `AJAX.request()`, todo esto ocurre solo:
 
 ```
    AJAX.request({ url, form })
@@ -59,7 +59,7 @@ await AJAX.request({
 });
 
 // Todo lo demás — validación, estado de carga, eventos de error,
-// serialización de datos — lo maneja el pipeline.
+// serialización de datos — lo maneja el framework.
 ```
 
 El mismo principio rige `VIEW.load()`: cada fragmento HTML que se carga dinámicamente pasa de forma automática por la vinculación de restricciones, el formateo de entradas y la ejecución de hooks personalizados. Nada de inicialización manual. Nada de "se me olvidó configurar la validación en el contenido nuevo".
@@ -84,7 +84,7 @@ await VIEW.load(container, { url: '/api/partial-view' });
 | Debates de estilo en code review | La arquitectura zanja el debate |
 
 - **Elimina la divergencia**: Todo el equipo aprende una sola API — se acabaron las discusiones sobre detalles de implementación.
-- **Impone consistencia de fábrica**: Todas las peticiones recorren el mismo pipeline; ni se saltan overlays de carga ni se escapan validaciones.
+- **Impone consistencia de fábrica**: Todas las peticiones recorren el mismo framework; ni se saltan overlays de carga ni se escapan validaciones.
 - **Onboarding exprés**: Un nuevo miembro lee un ejemplo de `AJAX.request()` y ya puede contribuir, en vez de descifrar diez patrones desperdigados por el código.
 
 ### Para Agentes de IA
@@ -93,14 +93,14 @@ await VIEW.load(container, { url: '/api/partial-view' });
 |--------|-------|
 | El Agente despliega 15 líneas de fetch + validación + errores | El Agente emite 1 línea: `AJAX.request({ url, form })` |
 | Ventana de contexto devorada por boilerplate | Tokens libres para la lógica de negocio |
-| Distintos Agentes, distintos patrones | Todos los Agentes producen llamadas idénticas al pipeline |
-| Hay que auditar cada salida buscando pasos omitidos | El pipeline garantiza completitud — **barrera de seguridad de serie** |
+| Distintos Agentes, distintos patrones | Todos los Agentes producen llamadas idénticas al framework |
+| Hay que auditar cada salida buscando pasos omitidos | El framework garantiza completitud — **barrera de seguridad de serie** |
 | El Agente "se olvida" del overlay de carga | Imposible — la arquitectura no lo permite |
 
 Cuando varios Agentes de IA producen código en paralelo, esta capa de abstracción se vuelve todavía más decisiva:
 
 - **Tokens bien invertidos**: Un Agente solo necesita emitir `AJAX.request({ url, form })` — una línea — en lugar de reescribir cada vez la lógica completa de `fetch` + validación + errores + carga. La ventana de contexto es el recurso más valioso de la IA; cada token ahorrado es calidad que se preserva.
-- **Comportamiento predecible**: No importa qué Agente genere el código: todo pasa por el mismo pipeline y produce el mismo resultado. Ya no hace falta auditar si cada uno implementó bien el overlay de carga.
+- **Comportamiento predecible**: No importa qué Agente genere el código: todo pasa por el mismo framework y produce el mismo resultado. Ya no hace falta auditar si cada uno implementó bien el overlay de carga.
 - **Barrera de seguridad estructural**: La abstracción funciona como un guardarraíl. Un Agente no puede "olvidarse" de validar un formulario porque `AJAX.request()` lo hace por él. La disciplina la impone la arquitectura, no la memoria.
 
 ### La idea central
