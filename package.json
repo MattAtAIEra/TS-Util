@@ -1,6 +1,6 @@
 {
   "name": "ts-util-core",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "TS-Util Core Library — form validation, AJAX, view loading, messaging, and formatting utilities",
   "type": "module",
   "main": "./dist/index.js",
