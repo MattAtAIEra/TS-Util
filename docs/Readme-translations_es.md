@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Un pipeline. Mismas barreras de seguridad. Ya sea tu equipo o tus Agentes de IA escribiendo el código.</strong>
+  <strong>Un solo pipeline. Las mismas garantías. Da igual si quien escribe el código es tu equipo o tus Agentes de IA.</strong>
 </p>
 
 <p align="center">
@@ -18,26 +18,26 @@
 
 ## 1. ¿Por qué Agent Discipline?
 
-No tienes un problema de calidad de código. Tienes un **problema de consistencia.**
+Tu código no tiene un problema de calidad. Tiene un **problema de caos.**
 
-Diez ingenieros escriben diez llamadas AJAX diferentes. Diez Agentes de IA generan diez patrones fetch diferentes. Algunos validan formularios, algunos no. Algunos muestran overlays de carga, algunos lo olvidan. Algunos manejan errores con gracia, algunos los tragan en silencio.
+Diez ingenieros, diez maneras distintas de hacer una llamada AJAX. Diez Agentes de IA, diez patrones fetch que no se parecen entre sí. Unos validan formularios; otros, ni se molestan. Unos muestran el overlay de carga; otros se lo saltan sin pestañear. Unos manejan errores con elegancia; otros los entierran en silencio.
 
-La revisión de código atrapa algo de esto. **La arquitectura lo atrapa todo.**
+La revisión de código pesca algunos de estos problemas. **La arquitectura los elimina todos de raíz.**
 
 | El verdadero problema | Lo que realmente sucede |
 |---|---|
-| "Cada desarrollador hace AJAX de forma diferente." | La validación se omite. Los spinners de carga son inconsistentes. El manejo de errores es un volado. |
-| "Los Agentes de IA generan código verboso y repetitivo." | Cada Agente expande `fetch` + validación + manejo de errores + carga desde cero, quemando tokens de contexto en boilerplate. |
-| "Los nuevos miembros rompen las convenciones." | No sabían que *había* una convención — era conocimiento tribal, no infraestructura impuesta. |
-| "No podemos saber si el Agente olvidó algo." | Habría que auditar cada función generada. A escala, eso es imposible. |
+| "Cada desarrollador hace AJAX a su manera." | Se saltan validaciones. Los spinners aparecen cuando les da la gana. El manejo de errores es una ruleta. |
+| "Los Agentes de IA generan código inflado y repetitivo." | Cada Agente reinventa la rueda: `fetch` + validación + errores + carga, desde cero, quemando tokens de contexto en puro boilerplate. |
+| "Los nuevos rompen las convenciones." | Nadie les dijo que *existía* una convención — vivía en la cabeza del equipo, no en la infraestructura. |
+| "No sabemos si el Agente se olvidó de algo." | Habría que auditar cada función generada. A escala, eso es una quimera. |
 
-**La solución no es más revisión de código. La solución es hacer imposible escribir código incorrecto.**
+**La solución no es revisar más código. La solución es que sea imposible escribirlo mal.**
 
 ---
 
 ## 2. Cómo funciona
 
-TS-Util envuelve AJAX, VIEW, validación, formateo y mensajería en **un único pipeline forzado**. Cuando cualquiera — humano o IA — llama a `AJAX.request()`, lo siguiente sucede automáticamente:
+TS-Util encapsula AJAX, VIEW, validación, formateo y mensajería en **un único pipeline obligatorio**. Cuando alguien — humano o IA — llama a `AJAX.request()`, todo esto ocurre solo:
 
 ```
    AJAX.request({ url, form })
@@ -62,7 +62,7 @@ await AJAX.request({
 // serialización de datos — lo maneja el pipeline.
 ```
 
-El mismo principio aplica a `VIEW.load()` — cada fragmento HTML cargado dinámicamente pasa automáticamente por vinculación de restricciones, formateo de entradas y ejecución de hooks personalizados. Sin inicialización manual. Sin "olvidar" configurar la validación en contenido nuevo.
+El mismo principio rige `VIEW.load()`: cada fragmento HTML que se carga dinámicamente pasa de forma automática por la vinculación de restricciones, el formateo de entradas y la ejecución de hooks personalizados. Nada de inicialización manual. Nada de "se me olvidó configurar la validación en el contenido nuevo".
 
 ```typescript
 // Cargar fragmento HTML — validación + formateo se auto-inicializan
@@ -77,37 +77,37 @@ await VIEW.load(container, { url: '/api/partial-view' });
 
 | Antes | Después |
 |--------|-------|
-| 10 ingenieros, 10 patrones AJAX | 1 API: `AJAX.request()` |
-| El nuevo lee 10 patrones dispersos | El nuevo lee 1 ejemplo, despliega el primer día |
-| "¿Agregaste el overlay de carga?" | El overlay de carga es automático — no se puede olvidar |
-| "¿Validaste el formulario?" | La validación es automática — no se puede omitir |
-| Debates de estilo en code review | La arquitectura impone el estilo |
+| 10 ingenieros, 10 patrones AJAX | Una sola API: `AJAX.request()` |
+| El nuevo lee 10 patrones desperdigados | El nuevo lee 1 ejemplo y despliega en su primer día |
+| "¿Pusiste el overlay de carga?" | El overlay es automático — olvidarlo es imposible |
+| "¿Validaste el formulario?" | La validación es automática — saltársela, también |
+| Debates de estilo en code review | La arquitectura zanja el debate |
 
-- **Elimina la divergencia**: Los ingenieros aprenden una sola API — sin debates sobre detalles de implementación.
-- **Impone consistencia**: Todas las peticiones pasan por el mismo pipeline, asegurando que no se omitan overlays de carga ni se salten validaciones.
-- **Reduce el costo de incorporación**: Un nuevo miembro lee un ejemplo de `AJAX.request()` y está listo, en lugar de descifrar diez patrones dispersos.
+- **Elimina la divergencia**: Todo el equipo aprende una sola API — se acabaron las discusiones sobre detalles de implementación.
+- **Impone consistencia de fábrica**: Todas las peticiones recorren el mismo pipeline; ni se saltan overlays de carga ni se escapan validaciones.
+- **Onboarding exprés**: Un nuevo miembro lee un ejemplo de `AJAX.request()` y ya puede contribuir, en vez de descifrar diez patrones desperdigados por el código.
 
 ### Para Agentes de IA
 
 | Antes | Después |
 |--------|-------|
-| Agente expande 15 líneas de fetch + validación + manejo de errores | Agente emite 1 línea: `AJAX.request({ url, form })` |
-| Ventana de contexto quemada en boilerplate | Tokens preservados para lógica de negocio |
-| Diferentes Agentes producen diferentes patrones | Todos los Agentes producen llamadas idénticas al pipeline |
-| Hay que auditar cada salida del Agente por pasos faltantes | El pipeline garantiza completitud — **barrera de seguridad por diseño** |
-| Agente "olvida" el overlay de carga | Imposible — la arquitectura lo impone |
+| El Agente despliega 15 líneas de fetch + validación + errores | El Agente emite 1 línea: `AJAX.request({ url, form })` |
+| Ventana de contexto devorada por boilerplate | Tokens libres para la lógica de negocio |
+| Distintos Agentes, distintos patrones | Todos los Agentes producen llamadas idénticas al pipeline |
+| Hay que auditar cada salida buscando pasos omitidos | El pipeline garantiza completitud — **barrera de seguridad de serie** |
+| El Agente "se olvida" del overlay de carga | Imposible — la arquitectura no lo permite |
 
-Cuando múltiples Agentes de IA co-producen código, esta capa de abstracción se vuelve aún más crítica:
+Cuando varios Agentes de IA producen código en paralelo, esta capa de abstracción se vuelve todavía más decisiva:
 
-- **Eficiencia en tokens**: Un Agente solo necesita emitir `AJAX.request({ url, form })` — una línea — en lugar de expandir cada vez la lógica completa de `fetch` + validación + manejo de errores + carga. La ventana de contexto es el recurso más valioso de la IA; ahorrar tokens significa preservar calidad.
-- **Comportamiento predecible**: El código generado por diferentes Agentes fluye a través del mismo pipeline, garantizando resultados consistentes. No necesitas auditar si cada Agente implementó correctamente el overlay de carga.
-- **Efecto de barrera de seguridad**: La capa de abstracción actúa como una barrera. Un Agente no puede "olvidar" validar un formulario porque `AJAX.request()` lo hace automáticamente. La disciplina se impone por arquitectura, no por memoria.
+- **Tokens bien invertidos**: Un Agente solo necesita emitir `AJAX.request({ url, form })` — una línea — en lugar de reescribir cada vez la lógica completa de `fetch` + validación + errores + carga. La ventana de contexto es el recurso más valioso de la IA; cada token ahorrado es calidad que se preserva.
+- **Comportamiento predecible**: No importa qué Agente genere el código: todo pasa por el mismo pipeline y produce el mismo resultado. Ya no hace falta auditar si cada uno implementó bien el overlay de carga.
+- **Barrera de seguridad estructural**: La abstracción funciona como un guardarraíl. Un Agente no puede "olvidarse" de validar un formulario porque `AJAX.request()` lo hace por él. La disciplina la impone la arquitectura, no la memoria.
 
 ### La idea central
 
-> **La disciplina no es "recordar hacer lo correcto." La disciplina es hacer que lo correcto sea lo único que puede suceder.**
+> **Disciplina no es acordarte de hacer las cosas bien. Disciplina es que hacerlas mal sea imposible.**
 >
-> Eso es lo que hace TS-Util — para tu equipo hoy, y para los Agentes de IA que escribirán la mayoría de tu código mañana.
+> Eso es exactamente lo que logra TS-Util — para tu equipo hoy, y para los Agentes de IA que mañana escribirán la mayor parte de tu código.
 
 ---
 
@@ -151,7 +151,7 @@ await AJAX.request({
 });
 ```
 
-Esa única llamada a `AJAX.request()` hará:
+Con esa única llamada a `AJAX.request()` se desencadena todo:
 1. Validar todos los campos `constraint="required"` del formulario
 2. Emitir `ajax:before` (tu spinner aparece)
 3. Serializar el formulario a JSON y hacer POST
@@ -168,7 +168,7 @@ Esa única llamada a `AJAX.request()` hará:
 > npx serve .        # luego abrir http://localhost:3000/demo.html
 > ```
 
-La demo te permite hacer clic a través de Events, AJAX, Validation, Formatting, diálogos MSG, inyección VIEW, y funciones utilitarias — con fragmentos de código junto a resultados en tiempo real.
+La demo te permite explorar Events, AJAX, Validation, Formatting, diálogos MSG, inyección VIEW y funciones utilitarias — con fragmentos de código al lado de sus resultados en tiempo real.
 
 ---
 
@@ -196,7 +196,7 @@ La demo te permite hacer clic a través de Events, AJAX, Validation, Formatting,
                                └──────────┘     └──────────────┘
 ```
 
-Todos los módulos se comunican a través del `EventEmitter` tipado — ningún módulo importa a otro directamente. Esto hace que cada pieza sea independientemente testeable y reemplazable.
+Todos los módulos se comunican a través del `EventEmitter` tipado — ninguno importa a otro directamente. Así, cada pieza se puede testear y reemplazar de forma independiente.
 
 ---
 
@@ -254,7 +254,7 @@ const user = await AJAX.requestJSON<User>({
 
 ### Validation — restricciones declarativas
 
-Declara en HTML, la librería hace el resto:
+Declaras en HTML y la librería se encarga del resto:
 
 ```html
 <input constraint="required"             labelName="Nombre" />
@@ -457,17 +457,17 @@ La salida va a `dist/` con `.js`, `.d.ts` y source maps.
 
 ## Patrones de diseño
 
-Esta librería es un código educativo. Cada módulo implementa un patrón GoF nombrado:
+Esta librería es también material educativo. Cada módulo implementa un patrón GoF con nombre y apellido:
 
 | Patrón | Módulo | Qué enseña |
 |---------|--------|----------------|
-| **Mediator** | `EventEmitter` | Comunicación desacoplada entre módulos |
-| **Facade** | `AJAX`, `MSG` | Ocultar complejidad multi-paso detrás de una llamada |
-| **Template Method** | `requestJSON()` | Reutilizar un algoritmo base, personalizar un paso |
-| **Observer** | `VIEW.addBeforeLoad()` | Registro de plugins sin acoplamiento |
-| **Strategy** | `setRequiredInvalidCallback()` | Reemplazar comportamiento sin modificar el fuente |
-| **Registry** | `Formatter` | Búsqueda extensible basada en claves |
-| **Decorator** | atributos `constraint="..."` | Comportamiento composable vía HTML |
+| **Mediator** | `EventEmitter` | Módulos que se hablan sin conocerse |
+| **Facade** | `AJAX`, `MSG` | Toda la complejidad oculta tras una sola llamada |
+| **Template Method** | `requestJSON()` | Reutilizar el algoritmo base y personalizar un paso |
+| **Observer** | `VIEW.addBeforeLoad()` | Plugins que se registran sin acoplarse |
+| **Strategy** | `setRequiredInvalidCallback()` | Cambiar el comportamiento sin tocar el código fuente |
+| **Registry** | `Formatter` | Búsqueda extensible por clave |
+| **Decorator** | atributos `constraint="..."` | Comportamiento composable directamente en el HTML |
 
 Documentación detallada:
 - **[Before (jQuery)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-before.md)** — patrones en el código original

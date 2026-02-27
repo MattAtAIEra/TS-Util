@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Eine Pipeline. Dieselben Leitplanken. Ob dein Team oder deine KI-Agenten den Code schreiben.</strong>
+  <strong>Eine Pipeline. Dieselben Leitplanken. Egal, ob dein Team tippt oder deine KI-Agenten generieren.</strong>
 </p>
 
 <p align="center">
@@ -18,26 +18,26 @@
 
 ## 1. Warum Agent Discipline?
 
-Du hast kein Code-Qualitätsproblem. Du hast ein **Konsistenzproblem.**
+Dein Problem ist nicht schlechter Code. Dein Problem heißt **Wildwuchs.**
 
-Zehn Ingenieure schreiben zehn verschiedene AJAX-Aufrufe. Zehn KI-Agenten generieren zehn verschiedene Fetch-Muster. Manche validieren Formulare, manche nicht. Manche zeigen Lade-Overlays, manche vergessen es. Manche behandeln Fehler elegant, manche verschlucken sie stillschweigend.
+Zehn Ingenieure, zehn verschiedene AJAX-Aufrufe. Zehn KI-Agenten, zehn verschiedene Fetch-Muster. Die einen validieren Formulare, die anderen nicht. Hier ein Lade-Overlay, dort keins. Fehlerbehandlung? Mal elegant, mal komplett verschluckt.
 
 Code-Review fängt einiges ab. **Architektur fängt alles ab.**
 
 | Das eigentliche Problem | Was tatsächlich passiert |
 |---|---|
-| „Jeder Entwickler macht AJAX anders." | Validierung wird übersprungen. Lade-Spinner sind inkonsistent. Fehlerbehandlung ist Glückssache. |
-| „KI-Agenten generieren ausführlichen, sich wiederholenden Code." | Jeder Agent baut `fetch` + Validierung + Fehlerbehandlung + Laden von Grund auf, und verbrennt Kontext-Token für Boilerplate. |
-| „Neue Teammitglieder brechen Konventionen." | Sie wussten nicht, dass es eine Konvention *gab* — es war Stammwissen, keine durchgesetzte Infrastruktur. |
-| „Wir können nicht erkennen, ob der Agent etwas vergessen hat." | Man müsste jede generierte Funktion prüfen. In großem Maßstab ist das unmöglich. |
+| „Jeder Entwickler macht AJAX anders." | Validierung? Glückssache. Lade-Spinner? Mal ja, mal nein. Fehlerbehandlung? Hoffen wir das Beste. |
+| „KI-Agenten generieren aufgeblähten Einweg-Code." | Jeder Agent zimmert `fetch` + Validierung + Fehlerbehandlung + Ladezustand von Grund auf zusammen — und verbrennt dabei wertvolle Kontext-Token für Boilerplate. |
+| „Neue Teammitglieder brechen Konventionen." | Sie wussten gar nicht, dass es eine Konvention *gab* — alles nur Flurfunk, nichts davon im Code verankert. |
+| „Wir können nicht erkennen, ob der Agent etwas vergessen hat." | Jede einzelne generierte Funktion prüfen? Im Alltag schlicht unmöglich. |
 
-**Die Lösung ist nicht mehr Code-Review. Die Lösung ist, falschen Code unmöglich zu machen.**
+**Die Antwort ist nicht noch mehr Code-Review. Die Antwort: Mach falschen Code schlicht unmöglich.**
 
 ---
 
 ## 2. So funktioniert es
 
-TS-Util fasst AJAX, VIEW, Validierung, Formatierung und Messaging in **eine einzige erzwungene Pipeline** zusammen. Wenn jemand — Mensch oder KI — `AJAX.request()` aufruft, passiert Folgendes automatisch:
+TS-Util bündelt AJAX, VIEW, Validierung, Formatierung und Messaging in **einer einzigen Pipeline, an der niemand vorbeikommt**. Sobald jemand — Mensch oder KI — `AJAX.request()` aufruft, läuft automatisch ab:
 
 ```
    AJAX.request({ url, form })
@@ -62,7 +62,7 @@ await AJAX.request({
 // Datenserialisierung — wird von der Pipeline behandelt.
 ```
 
-Dasselbe Prinzip gilt für `VIEW.load()` — jedes dynamisch geladene HTML-Fragment durchläuft automatisch Constraint-Binding, Input-Formatierung und benutzerdefinierte Hook-Ausführung. Keine manuelle Initialisierung. Kein „Vergessen", die Validierung für neue Inhalte einzurichten.
+Für `VIEW.load()` gilt dasselbe Prinzip: Jedes dynamisch geladene HTML-Fragment durchläuft automatisch Constraint-Binding, Input-Formatierung und Hook-Ausführung. Kein manuelles Initialisieren. Kein „Ups, die Validierung für den neuen Content vergessen".
 
 ```typescript
 // HTML-Fragment laden — Validierung + Formatierung auto-initialisieren
@@ -77,37 +77,37 @@ await VIEW.load(container, { url: '/api/partial-view' });
 
 | Vorher | Nachher |
 |--------|-------|
-| 10 Ingenieure, 10 AJAX-Muster | 1 API: `AJAX.request()` |
-| Neue Mitarbeiter lesen 10 verstreute Muster | Neue Mitarbeiter lesen 1 Beispiel, liefern am ersten Tag |
-| „Hast du das Lade-Overlay hinzugefügt?" | Lade-Overlay ist automatisch — unmöglich zu vergessen |
-| „Hast du das Formular validiert?" | Validierung ist automatisch — unmöglich zu überspringen |
-| Code-Review-Debatten über Stil | Architektur erzwingt den Stil |
+| 10 Ingenieure, 10 AJAX-Muster | 1 API: `AJAX.request()` — fertig |
+| Neue Mitarbeiter lesen 10 verstreute Muster | Ein Beispiel lesen, am ersten Tag liefern |
+| „Hast du das Lade-Overlay hinzugefügt?" | Läuft automatisch — Vergessen ausgeschlossen |
+| „Hast du das Formular validiert?" | Läuft automatisch — Überspringen ausgeschlossen |
+| Code-Review-Debatten über Stil | Die Architektur gibt den Stil vor |
 
-- **Eliminiert Abweichungen**: Ingenieure lernen eine einzige API — keine Debatten über Implementierungsdetails.
-- **Erzwingt Konsistenz**: Jede Anfrage durchläuft dieselbe Pipeline, sodass Lade-Overlays nicht vergessen und Validierungen nicht übersprungen werden.
-- **Reduziert Einarbeitungskosten**: Ein neues Teammitglied liest ein `AJAX.request()`-Beispiel und kann sofort loslegen, anstatt zehn verstreute Muster zu entschlüsseln.
+- **Schluss mit Wildwuchs**: Eine API lernen, fertig — keine endlosen Debatten über Implementierungsdetails.
+- **Konsistenz ab Werk**: Jede Anfrage läuft durch dieselbe Pipeline. Lade-Overlays vergessen? Validierung überspringen? Geht gar nicht.
+- **Schnelleres Onboarding**: Ein `AJAX.request()`-Beispiel reicht, um loszulegen — statt zehn verstreute Muster zu entziffern.
 
 ### Für KI-Agenten
 
 | Vorher | Nachher |
 |--------|-------|
-| Agent expandiert 15 Zeilen fetch + Validierung + Fehlerbehandlung | Agent gibt 1 Zeile aus: `AJAX.request({ url, form })` |
-| Kontextfenster verbrannt für Boilerplate | Token bewahrt für Geschäftslogik |
-| Verschiedene Agenten produzieren verschiedene Muster | Alle Agenten produzieren identische Pipeline-Aufrufe |
-| Jede Agentenausgabe muss auf fehlende Schritte geprüft werden | Pipeline garantiert Vollständigkeit — **Leitplanke durch Design** |
-| Agent „vergisst" Lade-Overlay | Unmöglich — Architektur erzwingt es |
+| Agent bläht 15 Zeilen fetch + Validierung + Fehlerbehandlung auf | Agent gibt 1 Zeile aus: `AJAX.request({ url, form })` |
+| Kontextfenster verpulvert für Boilerplate | Token frei für echte Geschäftslogik |
+| Verschiedene Agenten, verschiedene Muster | Alle Agenten, identische Pipeline-Aufrufe |
+| Jede Agentenausgabe manuell auf fehlende Schritte prüfen | Pipeline garantiert Vollständigkeit — **Leitplanke by Design** |
+| Agent „vergisst" das Lade-Overlay | Geht nicht — die Architektur lässt es nicht zu |
 
-Wenn mehrere KI-Agenten gemeinsam Code erzeugen, wird diese Abstraktionsschicht noch wichtiger:
+Sobald mehrere KI-Agenten zusammen Code erzeugen, wird diese Abstraktionsschicht zum entscheidenden Hebel:
 
-- **Token-Effizienz**: Ein Agent muss nur `AJAX.request({ url, form })` ausgeben — eine Zeile — anstatt jedes Mal die vollständige Logik aus `fetch` + Validierung + Fehlerbehandlung + Ladezustand auszubreiten. Das Kontextfenster ist die wertvollste Ressource der KI; Token zu sparen bedeutet, Qualität zu bewahren.
-- **Vorhersagbares Verhalten**: Code verschiedener Agenten fließt durch dieselbe Pipeline, was konsistente Ergebnisse garantiert. Du musst nicht prüfen, ob jeder Agent das Lade-Overlay korrekt implementiert hat.
-- **Leitplanken-Effekt**: Die Abstraktionsschicht selbst wirkt als Leitplanke. Ein Agent kann nicht „vergessen", ein Formular zu validieren, weil `AJAX.request()` dies automatisch erledigt. Disziplin wird durch Architektur erzwungen, nicht durch Erinnerung.
+- **Token-Effizienz**: Eine Zeile `AJAX.request({ url, form })` statt jedes Mal `fetch` + Validierung + Fehlerbehandlung + Ladezustand ausrollen. Das Kontextfenster ist die wertvollste Ressource der KI — weniger Token verbrannt heißt mehr Raum für Qualität.
+- **Vorhersagbares Verhalten**: Egal welcher Agent den Code schreibt, alles fließt durch dieselbe Pipeline. Du musst nicht mühsam nachprüfen, ob ein Agent das Lade-Overlay vergessen hat.
+- **Leitplanken-Effekt**: Die Abstraktionsschicht selbst ist die Leitplanke. Formularvalidierung vergessen? Unmöglich, weil `AJAX.request()` sie automatisch durchführt. Disziplin entsteht durch Architektur, nicht durch guten Willen.
 
 ### Die Kernidee
 
-> **Disziplin bedeutet nicht „sich daran zu erinnern, das Richtige zu tun." Disziplin bedeutet, dass das Richtige das Einzige ist, was passieren kann.**
+> **Disziplin heißt nicht, sich ans Richtige zu erinnern. Disziplin heißt: Es gibt nur noch den richtigen Weg.**
 >
-> Das ist es, was TS-Util tut — für dein Team heute und für die KI-Agenten, die morgen den Großteil deines Codes schreiben werden.
+> Genau das leistet TS-Util — für dein Team heute und für die KI-Agenten, die morgen den Großteil deines Codes schreiben.
 
 ---
 
@@ -151,7 +151,7 @@ await AJAX.request({
 });
 ```
 
-Dieser einzelne `AJAX.request()`-Aufruf wird:
+Dieser eine `AJAX.request()`-Aufruf erledigt alles:
 1. Alle `constraint="required"` Felder im Formular validieren
 2. `ajax:before` auslösen (dein Spinner erscheint)
 3. Das Formular zu JSON serialisieren und POST senden
@@ -168,7 +168,7 @@ Dieser einzelne `AJAX.request()`-Aufruf wird:
 > npx serve .        # dann http://localhost:3000/demo.html öffnen
 > ```
 
-Die Demo lässt dich durch Events, AJAX, Validation, Formatting, MSG-Dialoge, VIEW-Injection und Utility-Funktionen klicken — mit Code-Snippets neben Echtzeit-Ergebnissen.
+Klick dich durch Events, AJAX, Validation, Formatting, MSG-Dialoge, VIEW-Injection und Utility-Funktionen — Code-Snippets und Live-Ergebnisse direkt nebeneinander.
 
 ---
 
@@ -196,7 +196,7 @@ Die Demo lässt dich durch Events, AJAX, Validation, Formatting, MSG-Dialoge, VI
                                └──────────┘     └──────────────┘
 ```
 
-Alle Module kommunizieren über den typisierten `EventEmitter` — kein Modul importiert ein anderes direkt. Das macht jedes Teil unabhängig testbar und austauschbar.
+Sämtliche Module kommunizieren ausschließlich über den typisierten `EventEmitter` — kein Modul importiert ein anderes direkt. Ergebnis: Jedes Teil lässt sich isoliert testen und jederzeit austauschen.
 
 ---
 
@@ -254,7 +254,7 @@ const user = await AJAX.requestJSON<User>({
 
 ### Validation — deklarative Constraints
 
-In HTML deklarieren, die Bibliothek erledigt den Rest:
+Einfach im HTML deklarieren — den Rest erledigt die Bibliothek:
 
 ```html
 <input constraint="required"             labelName="Name" />
@@ -383,7 +383,7 @@ isDateValid('not-a-date');  // → false
 
 ## API-Referenz
 
-### Singletons (vorverdrahtet, sofort einsatzbereit)
+### Singletons (fertig verdrahtet, direkt loslegen)
 
 | Export | Typ | Beschreibung |
 |--------|------|-------------|
@@ -451,27 +451,27 @@ npm run build          # einmalige Kompilierung
 npm run dev            # Watch-Modus
 ```
 
-Ausgabe erfolgt nach `dist/` mit `.js`, `.d.ts` und Source Maps.
+Landet in `dist/` — mit `.js`, `.d.ts` und Source Maps.
 
 ---
 
 ## Design-Patterns
 
-Diese Bibliothek ist eine lehrfreundliche Codebasis. Jedes Modul implementiert ein benanntes GoF-Pattern:
+Die Codebasis eignet sich hervorragend zum Lernen. Jedes Modul setzt ein klassisches GoF-Pattern um:
 
 | Pattern | Modul | Was es lehrt |
 |---------|--------|----------------|
-| **Mediator** | `EventEmitter` | Entkoppelte Inter-Modul-Kommunikation |
-| **Facade** | `AJAX`, `MSG` | Mehrstufige Komplexität hinter einem Aufruf verbergen |
-| **Template Method** | `requestJSON()` | Basis-Algorithmus wiederverwenden, einen Schritt anpassen |
-| **Observer** | `VIEW.addBeforeLoad()` | Plugin-Registrierung ohne Kopplung |
-| **Strategy** | `setRequiredInvalidCallback()` | Verhalten ersetzen ohne Quellcode zu ändern |
-| **Registry** | `Formatter` | Erweiterbares schlüsselbasiertes Lookup |
-| **Decorator** | `constraint="..."` Attribute | Kombinierbares Verhalten über HTML |
+| **Mediator** | `EventEmitter` | Module reden miteinander, ohne sich zu kennen |
+| **Facade** | `AJAX`, `MSG` | Komplexe Abläufe hinter einem einzigen Aufruf verstecken |
+| **Template Method** | `requestJSON()` | Basis-Algorithmus wiederverwenden, gezielt einen Schritt anpassen |
+| **Observer** | `VIEW.addBeforeLoad()` | Plugins einklinken, ohne feste Abhängigkeiten zu schaffen |
+| **Strategy** | `setRequiredInvalidCallback()` | Verhalten austauschen, ohne Quellcode anzufassen |
+| **Registry** | `Formatter` | Erweiterbares, schlüsselbasiertes Lookup |
+| **Decorator** | `constraint="..."` Attribute | Verhalten per HTML-Attribut kombinieren |
 
-Vertiefende Dokumentation:
-- **[Before (jQuery)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-before.md)** — Patterns in der ursprünglichen Codebasis
-- **[After (TypeScript)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-after.md)** — Wie TypeScript sie sicherer macht
+Wer tiefer einsteigen will:
+- **[Before (jQuery)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-before.md)** — die Patterns in der ursprünglichen Codebasis
+- **[After (TypeScript)](https://github.com/MattAtAIEra/TS-Util/blob/main/docs/good-design-pattern-implementation-after.md)** — wie TypeScript sie typsicher macht
 
 ---
 
